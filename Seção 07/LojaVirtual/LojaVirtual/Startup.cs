@@ -50,7 +50,7 @@ namespace LojaVirtual
             }
 
             app.UseHttpsRedirection();
-            //app.UseDefaultFiles(); //Carrega o site com os arquivos no wwwroot. Como movi os arquivos para pasta paginas, a aplicação não irá mais encontrar os arquivos para serem exibidos na página inicial.
+            app.UseDefaultFiles(); //Carrega o site com os arquivos no wwwroot. Como movi os arquivos para pasta paginas, a aplicação não irá mais encontrar os arquivos para serem exibidos na página inicial.
             app.UseStaticFiles();
             app.UseCookiePolicy();
             
