@@ -1,0 +1,22 @@
+﻿@model LojaVirtual.Models.Produto
+
+<h2>Visualização da view ok!</h2>
+
+@{ 
+    string nome = "Everton";
+}
+<p>
+    @nome
+</p>
+
+<p>
+    <h2>Produto</h2>
+    Código: @Model.Id <br/>
+    Nome: @Model.Nome <br/>
+    Descrição: @Model.Descricao <br/>
+    Valor: @Model.Valor.ToString("C") <br/>
+</p>
+
+<p>
+    Todos os direito reservados &copy; @DateTime.Now.Year
+</p>
