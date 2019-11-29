@@ -22,27 +22,38 @@ namespace LojaVirtual.Controllers
 
         public IActionResult ContatoAcao()
         {
-            var form = HttpContext.Request.Form;
-
-            var contato = new Contato
+            try
             {
-                Nome = form["nome"],
-                Email = form["email"],
-                Texto = form["texto"]
-            };
+                var form = HttpContext.Request.Form;
 
-            ContatoEmail.EnviarContatoPorEmail(contato);
+                var contato = new Contato
+                {
+                    Nome = form["nome"],
+                    Email = form["email"],
+                    Texto = form["texto"]
+                };
 
-            //Explicação
-            //var nome = HttpContext.Request.Form["nome"];
-            //var email = HttpContext.Request.Form["email"];
-            //var texto = HttpContext.Request.Form["texto"];
-            return new ContentResult
+                ContatoEmail.EnviarContatoPorEmail(contato);
+
+                //Explicação
+                //var nome = HttpContext.Request.Form["nome"];
+                //var email = HttpContext.Request.Form["email"];
+                //var texto = HttpContext.Request.Form["texto"];
+
+                ViewData["MSG_SUCESSO"] = "Mensagem de contato enviada com sucesso!";
+            }
+            catch (System.Net.Mail.SmtpException)
             {
-                Content = "Dados recebidos com sucesso! " +
-                $"<p>Nome: {contato.Nome}</p> <p>Email: {contato.Email}</p> <p>Texto: {contato.Texto}</p>",
-                ContentType = "text/html"
-            };
+                ViewData["MSG_ERRO"] = "Usuário e/ou senha incorretos";
+            }
+            catch (Exception e)
+            {
+                ViewData["MSG_ERRO"] = "Ocorreu o erro: " + e.Message;
+
+                //TODO: Implementar log.
+            }
+
+            return View("Contato");
         }
 
         public IActionResult Login()
