@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using LojaVirtual.Controllers.Libraries.Email;
+using LojaVirtual.Libraries.Email;
 using LojaVirtual.Models;
 using Microsoft.AspNetCore.Mvc;
+using System.ComponentModel.DataAnnotations;
+using System.Text;
 
 namespace LojaVirtual.Controllers
 {
@@ -33,14 +35,33 @@ namespace LojaVirtual.Controllers
                     Texto = form["texto"]
                 };
 
-                ContatoEmail.EnviarContatoPorEmail(contato);
+                var ListaMensagens = new List<ValidationResult>();
+                var contexto = new ValidationContext(contato);
+                var validacoesOk = Validator.TryValidateObject(contato, contexto, ListaMensagens, true);
 
-                //Explicação
-                //var nome = HttpContext.Request.Form["nome"];
-                //var email = HttpContext.Request.Form["email"];
-                //var texto = HttpContext.Request.Form["texto"];
+                if (!validacoesOk)
+                {
+                    var sb = new StringBuilder();
 
-                ViewData["MSG_SUCESSO"] = "Mensagem de contato enviada com sucesso!";
+                    foreach (var texto in ListaMensagens)
+                    {
+                        sb.Append(texto.ErrorMessage);
+                        sb.AppendJoin("<br />", texto.ErrorMessage);
+
+                        ViewData["MSG_ERRO"] = sb.ToString();
+                    }
+                }
+                else
+                {
+                    ContatoEmail.EnviarContatoPorEmail(contato);
+
+                    //Explicação
+                    //var nome = HttpContext.Request.Form["nome"];
+                    //var email = HttpContext.Request.Form["email"];
+                    //var texto = HttpContext.Request.Form["texto"];
+
+                    ViewData["MSG_SUCESSO"] = "Mensagem de contato enviada com sucesso!";
+                }
             }
             catch (System.Net.Mail.SmtpException)
             {

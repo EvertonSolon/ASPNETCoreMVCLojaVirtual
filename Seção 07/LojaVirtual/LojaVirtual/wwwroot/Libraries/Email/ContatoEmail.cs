@@ -7,7 +7,7 @@ using System.Net.Mail;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LojaVirtual.Controllers.Libraries.Email
+namespace LojaVirtual.Libraries.Email
 {
     public class ContatoEmail
     {
