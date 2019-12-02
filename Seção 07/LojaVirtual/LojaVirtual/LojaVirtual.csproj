@@ -6,7 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Include="wwwroot\Libraries\Email\ContatoEmail.cs" />
+    <Content Include="Libraries\Email\ContatoEmail.cs" />
   </ItemGroup>
 
 
@@ -18,7 +18,24 @@
 
 
   <ItemGroup>
-    <Folder Include="wwwroot\Libraries\Lang\" />
+    <Compile Update="Libraries\Lang\Mensagem.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Mensagem.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <EmbeddedResource Update="Libraries\Lang\Mensagem.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Mensagem.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <Folder Include="Database\" />
   </ItemGroup>
 
 </Project>

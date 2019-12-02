@@ -45,11 +45,11 @@ namespace LojaVirtual.Controllers
 
                     foreach (var texto in ListaMensagens)
                     {
-                        sb.Append(texto.ErrorMessage);
-                        sb.AppendJoin("<br />", texto.ErrorMessage);
-
-                        ViewData["MSG_ERRO"] = sb.ToString();
+                        sb.Append(texto.ErrorMessage + "<br />");
                     }
+
+                    ViewData["MSG_ERRO"] = sb.ToString();
+                    ViewData["CONTATO"] = contato;
                 }
                 else
                 {

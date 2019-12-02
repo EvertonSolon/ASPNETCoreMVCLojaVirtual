@@ -1,6 +1,9 @@
-﻿
+﻿@using LojaVirtual.Models;
+
 @{
+
     ViewData["Title"] = "Contato";
+    var contatoModel = ViewData["CONTATO"] as Contato;
 }
 
 <h3>Início da main (dentro do arquivo Index do Contato)</h3>
@@ -29,8 +32,8 @@
                             <dt>SAC:</dt>
                             <dd>sac@lojavirtual.com.br</dd>
                         </dl>
-                    </div> 
-                </div> 
+                    </div>
+                </div>
             </aside>
             <aside class="col-sm-6">
 
@@ -48,9 +51,9 @@
                             }
                             else if (ViewData["MSG_ERRO"] != null)
                             {
-                                <p class="alert alert-danger">@ViewData["MSG_ERRO"]</p>
+                                <p class="alert alert-danger">@Html.Raw(@ViewData["MSG_ERRO"])</p>
                             }
-                            
+
                             <form role="form" method="post" action="/Home/ContatoAcao">
                                 <div class="form-group">
                                     <label for="nome">Nome</label>
@@ -58,7 +61,8 @@
                                         <div class="input-group-prepend">
                                             <span class="input-group-text"><i class="fa fa-user"></i></span>
                                         </div>
-                                        <input type="text" class="form-control" name="nome" id="idnome" placeholder="">
+                                        <input type="text" class="form-control" name="nome" id="idnome" placeholder="" required 
+                                               value="@(contatoModel != null ? contatoModel.Nome : string.Empty)">
                                     </div>
                                 </div>
 
@@ -68,7 +72,8 @@
                                         <div class="input-group-prepend">
                                             <span class="input-group-text"><i class="fa fa-at"></i></span>
                                         </div>
-                                        <input type="text" class="form-control" name="email" id="idemail" placeholder="">
+                                        <input type="text" class="form-control" name="email" id="idemail" placeholder=""
+                                               value="@(contatoModel != null ? contatoModel.Email : string.Empty)">
                                     </div>
                                 </div>
 
@@ -77,7 +82,7 @@
                                         <div class="form-group">
                                             <label for="texto"><span class="hidden-xs">Texto</span> </label>
                                             <div class="form-inline">
-                                                <textarea class="form-control" name="texto" id="idtexto" style="width:100%"></textarea>
+                                                <textarea class="form-control" name="texto" id="idtexto" style="width:100%">@(contatoModel != null ? contatoModel.Texto : string.Empty)</textarea>
 
                                             </div>
                                         </div>
@@ -85,9 +90,9 @@
                                 </div>
                                 <button class="subscribe btn btn-primary btn-block" type="submit"> Enviar </button>
                             </form>
-                        </div> 
-                    </article> 
-                </div> 
+                        </div>
+                    </article>
+                </div>
             </aside>
         </div>
     </div>
