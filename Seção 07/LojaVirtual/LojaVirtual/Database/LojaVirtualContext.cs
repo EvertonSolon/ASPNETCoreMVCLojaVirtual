@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 
 namespace LojaVirtual.Database
 {
+    /// <summary>
+    /// LojaVirtualContext é o nome do banco de dados LojaVirtual no SQL no C#.
+    /// </summary>
     public class LojaVirtualContext : DbContext
     {
         public LojaVirtualContext(DbContextOptions<LojaVirtualContext> options) : base(options)
@@ -14,6 +17,9 @@ namespace LojaVirtual.Database
 
         }
 
-        public DbSet<Cliente> ClientesTable { get; set; }
+        // A comunicação entre as tabelas do banco de dados e os objetos da pasta Models se dará pelas linhas abaixo.
+        // O nome das tabelas será criado pela nome das propriedades abaixo.
+        public DbSet<Cliente> Clientes { get; set; }
+        public DbSet<NewsLetterEmail> NewsLetterEmails { get; set; }
     }
 }

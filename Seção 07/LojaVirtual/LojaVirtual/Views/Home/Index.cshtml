@@ -161,6 +161,32 @@
         </div> <!-- row.// -->
     </div>
 </main>
-<h3>Fim da main (dentro do arquivo Index da Home)</h3>
+<h3>Fim da main e início do próximo campo de e-mail (dentro do arquivo Index da Home)</h3>
+@*<a href="/Home/Index">content teste</a>>
+    @Html.ActionLink("Texto", "Index")*@
 
-
+@using (Html.BeginForm("Index", "Home", FormMethod.Post))
+{
+    <div class="container">
+        @*<form role="form" method="post" action="/Home/ContatoAcao" class="offset-3">*@
+            <div class="form-group">
+                <label for="email">Cadastre seu e-mail para receber as promoções:</label>
+                <div class="row">
+                    <div class="col-5">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fa fa-envelope"></i></span>
+                            </div>
+                            <input type="text" class="form-control" name="email" id="idemail" placeholder="" required
+                                   value=" ">
+                        </div>
+                    </div>
+                    <div class="col-2">
+                        <button class="subscribe btn btn-primary btn-block" type="submit"> Enviar </button>
+                    </div>
+                </div>
+            </div>
+        @*</form>*@
+    </div>
+}
+<h3>Fim do form, com verbo post (dentro do arquivo Index da Home)</h3>
