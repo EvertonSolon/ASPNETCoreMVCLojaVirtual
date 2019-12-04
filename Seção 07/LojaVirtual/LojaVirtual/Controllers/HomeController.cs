@@ -7,14 +7,40 @@ using LojaVirtual.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
+using LojaVirtual.Database;
 
 namespace LojaVirtual.Controllers
 {
     public class HomeController : Controller
     {
+        private readonly LojaVirtualContext _contexto;
+
+        public HomeController(LojaVirtualContext contexto)
+        {
+            _contexto = contexto;
+        }
+
+        [HttpGet]
         public IActionResult Index()
         {
             return View();
+        }
+
+        [HttpPost]
+        public IActionResult Index([FromForm]NewsLetterEmail newsLetter)
+        {
+
+            //Validação do formulário
+            if (!ModelState.IsValid)
+                return View();
+
+            //Adição no banco de dados
+            _contexto.NewsLetterEmails.Add(newsLetter);
+            _contexto.SaveChanges();
+
+            TempData["MSG_SUCESSO"] = "E-mail cadastrado!";
+            
+            return RedirectToAction(nameof(Index));
         }
 
         public IActionResult Contato()
