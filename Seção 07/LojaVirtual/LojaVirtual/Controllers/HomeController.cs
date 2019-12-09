@@ -8,16 +8,20 @@ using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
 using LojaVirtual.Database;
+using LojaVirtual.Repositories.Contracts;
 
 namespace LojaVirtual.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly LojaVirtualContext _contexto;
+        //private readonly LojaVirtualContext _contexto;
+        private readonly IClienteRepository _clienteRepository;
+        private readonly INewsLetterRepository _newsLetterRepository;
 
-        public HomeController(LojaVirtualContext contexto)
+        public HomeController(IClienteRepository clienteRepository, INewsLetterRepository newsLetterRepository)
         {
-            _contexto = contexto;
+            _clienteRepository = clienteRepository;
+            _newsLetterRepository = newsLetterRepository;
         }
 
         [HttpGet]
@@ -35,8 +39,9 @@ namespace LojaVirtual.Controllers
                 return View();
 
             //Adição no banco de dados
-            _contexto.NewsLetterEmails.Add(newsLetter);
-            _contexto.SaveChanges();
+            //_repository.NewsLetterEmails.Add(newsLetter);
+            //_repository.SaveChanges();
+            _newsLetterRepository.Cadastrar(newsLetter);
 
             TempData["MSG_SUCESSO"] = "E-mail cadastrado!";
             
@@ -113,9 +118,33 @@ namespace LojaVirtual.Controllers
             return View();
         }
 
+        
+
         public IActionResult CarrinhoCompras()
         {
             return View();
         }
+
+        #region POST
+        [HttpPost]
+        public IActionResult CadastroCliente([FromForm]Cliente cliente)
+        {
+            if (!ModelState.IsValid)
+                return View();
+
+            _clienteRepository.Cadastrar(cliente);
+
+            TempData["MSG_SUCESSO"] = "Cadastro realizado com sucesso!";
+            
+            //TODO: Implementar redirecionamentos diferentes (Ex: Painel, carrinhos de compras etc)
+            return RedirectToAction(nameof(CadastroCliente));
+        }
+
+        [HttpPost]
+        public IActionResult Login([FromForm]Cliente cliente)
+        {
+            return View();
+        }
+        #endregion
     }
 }

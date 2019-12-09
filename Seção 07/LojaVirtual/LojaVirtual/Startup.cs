@@ -13,6 +13,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.SqlServer;
 using LojaVirtual.Models;
+using LojaVirtual.Repositories;
+using LojaVirtual.Repositories.Contracts;
 
 namespace LojaVirtual
 {
@@ -39,15 +41,29 @@ namespace LojaVirtual
             */
             #endregion Fim do código comentado
 
-            #region Início da implementação do estado de sessão para tempdata
-            services.AddDistributedMemoryCache();
+            #region Repository pattern
 
+            services.AddScoped<IClienteRepository, ClienteRepository>();
+            services.AddScoped<INewsLetterRepository, NewsLetterRepository>();
+            #endregion
+
+            //#region Início da implementação do estado de sessão para tempdata
+            //services.AddDistributedMemoryCache();
+
+            //services.AddSession(options =>
+            //{
+            //    // Defini o tempo inativo (Idle timeout) da sessão para 10 segundos apenas para facilitar os testes.
+            //    options.IdleTimeout = TimeSpan.FromSeconds(10);
+            //});
+            //#endregion Fim da implementação do estado de sessão para tempdata
+
+            #region Configuração da Sessão para cookies
+            services.AddMemoryCache();
             services.AddSession(options =>
             {
-                // Defini o tempo inativo (Idle timeout) da sessão para 10 segundos apenas para facilitar os testes.
-                options.IdleTimeout = TimeSpan.FromSeconds(10);
             });
-            #endregion Fim da implementação do estado de sessão para tempdata
+            
+            #endregion
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
