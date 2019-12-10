@@ -9,6 +9,8 @@ using System.ComponentModel.DataAnnotations;
 using System.Text;
 using LojaVirtual.Database;
 using LojaVirtual.Repositories.Contracts;
+using Microsoft.AspNetCore.Http;
+//using Microsoft.AspNetCore.Http;
 
 namespace LojaVirtual.Controllers
 {
@@ -118,11 +120,30 @@ namespace LojaVirtual.Controllers
             return View();
         }
 
-        
-
         public IActionResult CarrinhoCompras()
         {
             return View();
+        }
+
+        public IActionResult Painel()
+        {
+            byte[] UsuarioId;
+
+            if (HttpContext.Session.TryGetValue("ID", out UsuarioId))
+            {
+                return new ContentResult
+                {
+                    Content = $"<p>Acesso concedido ao usu&aacuterio {UsuarioId[0]}!</p>" + 
+                    $"<p><b>E-mail:</b> {HttpContext.Session.GetString("Email")}.</p>" +
+                    $"<p><b>Idade:</b> {HttpContext.Session.GetInt32("Idade")}.</p>",
+                    ContentType = "text/html"
+                };
+
+    }
+            return new ContentResult
+            {
+                Content = $"Acesso negado"
+            };
         }
 
         #region POST
@@ -143,7 +164,22 @@ namespace LojaVirtual.Controllers
         [HttpPost]
         public IActionResult Login([FromForm]Cliente cliente)
         {
-            return View();
+            if (!(cliente.Email == "eveton@teste.com" && cliente.Senha == "1234"))
+            {
+                return new ContentResult
+                {
+                    Content = "Não logado!"
+                };
+            }
+
+            HttpContext.Session.Set("ID", new byte[] { 52 });
+            HttpContext.Session.SetString("Email", cliente.Email); //SetString importar a classe Microsoft.AspNetCore.Http
+            HttpContext.Session.SetInt32("Idade", 41); //SetInt32 importar a classe Microsoft.AspNetCore.Http
+
+            return new ContentResult
+            {
+                Content = "Logado!"
+            };
         }
         #endregion
     }
