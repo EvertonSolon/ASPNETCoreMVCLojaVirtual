@@ -127,19 +127,17 @@ namespace LojaVirtual.Controllers
 
         public IActionResult Painel()
         {
-            byte[] UsuarioId;
-
-            if (HttpContext.Session.TryGetValue("ID", out UsuarioId))
+            if (HttpContext.Session.TryGetValue("ID", out byte[] UsuarioId))
             {
                 return new ContentResult
                 {
-                    Content = $"<p>Acesso concedido ao usu&aacuterio {UsuarioId[0]}!</p>" + 
+                    Content = $"<p>Acesso concedido ao usu&aacuterio {UsuarioId[0]}!</p>" +
                     $"<p><b>E-mail:</b> {HttpContext.Session.GetString("Email")}.</p>" +
                     $"<p><b>Idade:</b> {HttpContext.Session.GetInt32("Idade")}.</p>",
                     ContentType = "text/html"
                 };
 
-    }
+            }
             return new ContentResult
             {
                 Content = $"Acesso negado"

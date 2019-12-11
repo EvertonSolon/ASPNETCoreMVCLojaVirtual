@@ -15,6 +15,7 @@ using Microsoft.EntityFrameworkCore.SqlServer;
 using LojaVirtual.Models;
 using LojaVirtual.Repositories;
 using LojaVirtual.Repositories.Contracts;
+using LojaVirtual.Libraries.Sessao;
 
 namespace LojaVirtual
 {
@@ -41,8 +42,10 @@ namespace LojaVirtual
             */
             #endregion Fim do código comentado
 
-            #region Repository pattern
+            //Configuração para que a injeção de dependência funcione na classe Sessao.
+            services.AddHttpContextAccessor();
 
+            #region Repository pattern
             services.AddScoped<IClienteRepository, ClienteRepository>();
             services.AddScoped<INewsLetterRepository, NewsLetterRepository>();
             #endregion
@@ -62,6 +65,8 @@ namespace LojaVirtual
             services.AddSession(options =>
             {
             });
+
+            services.AddScoped<Sessao>();//Permite que a classe Sessao seja utilizado em qualquer parte da LojaVirtual.
             
             #endregion
 
