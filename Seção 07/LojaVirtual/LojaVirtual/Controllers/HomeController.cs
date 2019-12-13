@@ -10,6 +10,7 @@ using System.Text;
 using LojaVirtual.Database;
 using LojaVirtual.Repositories.Contracts;
 using Microsoft.AspNetCore.Http;
+using LojaVirtual.Libraries.Login;
 //using Microsoft.AspNetCore.Http;
 
 namespace LojaVirtual.Controllers
@@ -19,11 +20,15 @@ namespace LojaVirtual.Controllers
         //private readonly LojaVirtualContext _contexto;
         private readonly IClienteRepository _clienteRepository;
         private readonly INewsLetterRepository _newsLetterRepository;
+        private readonly LoginCliente _loginCliente;
 
-        public HomeController(IClienteRepository clienteRepository, INewsLetterRepository newsLetterRepository)
+        public HomeController(IClienteRepository clienteRepository, 
+            INewsLetterRepository newsLetterRepository,
+            LoginCliente loginCliente)
         {
             _clienteRepository = clienteRepository;
             _newsLetterRepository = newsLetterRepository;
+            _loginCliente = loginCliente;
         }
 
         [HttpGet]
@@ -127,20 +132,21 @@ namespace LojaVirtual.Controllers
 
         public IActionResult Painel()
         {
-            if (HttpContext.Session.TryGetValue("ID", out byte[] UsuarioId))
-            {
+            var cliente = _loginCliente.GetCliente();
+
+            if (cliente == null)
                 return new ContentResult
                 {
-                    Content = $"<p>Acesso concedido ao usu&aacuterio {UsuarioId[0]}!</p>" +
-                    $"<p><b>E-mail:</b> {HttpContext.Session.GetString("Email")}.</p>" +
-                    $"<p><b>Idade:</b> {HttpContext.Session.GetInt32("Idade")}.</p>",
-                    ContentType = "text/html"
+                    Content = $"Acesso negado"
                 };
 
-            }
+
             return new ContentResult
             {
-                Content = $"Acesso negado"
+                Content = $"<p>Acesso concedido ao usu&aacuterio {cliente.Id}!</p>" +
+                $"<p><b>E-mail:</b> {cliente.Email}.</p>" +
+                $"<p><b>Idade:</b> {DateTime.Now.AddYears(-cliente.Nascimento.Year).ToString("yy")}.</p>",
+                ContentType = "text/html"
             };
         }
 
@@ -162,22 +168,45 @@ namespace LojaVirtual.Controllers
         [HttpPost]
         public IActionResult Login([FromForm]Cliente cliente)
         {
-            if (!(cliente.Email == "eveton@teste.com" && cliente.Senha == "1234"))
+            var clienteDb = _clienteRepository.Login(cliente.Email, cliente.Senha);
+
+            #region Old
+            //Old
+            //if (!(cliente.Email == "eveton@teste.com" && cliente.Senha == "1234"))
+            //{
+            //    return new ContentResult
+            //    {
+            //        Content = "Não logado!"
+            //    };
+            //}
+
+            //Old
+            //HttpContext.Session.Set("ID", new byte[] { 52 });
+            //HttpContext.Session.SetString("Email", cliente.Email); //SetString importar a classe Microsoft.AspNetCore.Http
+            //HttpContext.Session.SetInt32("Idade", 41); //SetInt32 importar a classe Microsoft.AspNetCore.Http
+
+            //return new ContentResult
+            //{
+            //    Content = "Logado!"
+            //};
+            #endregion
+
+            if (clienteDb == null)
             {
-                return new ContentResult
-                {
-                    Content = "Não logado!"
-                };
+                ViewData["MSG_ERRO"] = $"E-mail: {cliente.Email} não foi encontrado!";
+                return View();
             }
+                
+                //return new ContentResult
+                //{
+                //    Content = "Não logado!"
+                //};
 
-            HttpContext.Session.Set("ID", new byte[] { 52 });
-            HttpContext.Session.SetString("Email", cliente.Email); //SetString importar a classe Microsoft.AspNetCore.Http
-            HttpContext.Session.SetInt32("Idade", 41); //SetInt32 importar a classe Microsoft.AspNetCore.Http
+            _loginCliente.Login(clienteDb);
 
-            return new ContentResult
-            {
-                Content = "Logado!"
-            };
+            return new RedirectResult(Url.Action(nameof(Painel)));
+
+          
         }
         #endregion
     }

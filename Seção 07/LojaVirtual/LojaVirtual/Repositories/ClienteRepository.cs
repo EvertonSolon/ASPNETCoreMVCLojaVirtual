@@ -36,9 +36,9 @@ namespace LojaVirtual.Repositories
             _contexto.SaveChanges();
         }
 
-        public Cliente Login(string Email, string Senha)
+        public Cliente Login(string email, string senha)
         {
-            var cliente = _contexto.Clientes.First(x => x.Email == Email && x.Senha == x.Senha);
+            var cliente = _contexto.Clientes.FirstOrDefault(x => x.Email == email && x.Senha == senha);
             return cliente;
         }
 

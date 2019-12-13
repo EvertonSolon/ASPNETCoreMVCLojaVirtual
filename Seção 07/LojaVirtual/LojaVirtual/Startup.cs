@@ -16,6 +16,7 @@ using LojaVirtual.Models;
 using LojaVirtual.Repositories;
 using LojaVirtual.Repositories.Contracts;
 using LojaVirtual.Libraries.Sessao;
+using LojaVirtual.Libraries.Login;
 
 namespace LojaVirtual
 {
@@ -31,7 +32,7 @@ namespace LojaVirtual
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            #region Início do código comentado
+            #region Old
             /* 
             services.Configure<CookiePolicyOptions>(options =>
             {
@@ -40,7 +41,10 @@ namespace LojaVirtual
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
             */
-            #endregion Fim do código comentado
+            #endregion
+
+            //Todas as classes que serão utilizadas pela injeção de dependência deverão ser incluídas aqui.
+
 
             //Configuração para que a injeção de dependência funcione na classe Sessao.
             services.AddHttpContextAccessor();
@@ -67,7 +71,8 @@ namespace LojaVirtual
             });
 
             services.AddScoped<Sessao>();//Permite que a classe Sessao seja utilizado em qualquer parte da LojaVirtual.
-            
+            services.AddScoped<LoginCliente>();
+
             #endregion
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);

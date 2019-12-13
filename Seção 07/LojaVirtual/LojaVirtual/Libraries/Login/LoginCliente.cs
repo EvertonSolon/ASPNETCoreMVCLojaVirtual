@@ -28,6 +28,9 @@ namespace LojaVirtual.Libraries.Login
 
         public Cliente GetCliente()
         {
+            if (!_sessao.Existe(Chave))
+                return null;
+
             var clienteJson = _sessao.Consultar(Chave);
             var cliente = JsonConvert.DeserializeObject<Cliente>(clienteJson);
             return cliente;
