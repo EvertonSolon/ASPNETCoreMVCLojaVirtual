@@ -50,8 +50,10 @@ namespace LojaVirtual
             services.AddHttpContextAccessor();
 
             #region Repository pattern
+            //services.AddScoped<IBaseRepository, BaseRepository>();
             services.AddScoped<IClienteRepository, ClienteRepository>();
             services.AddScoped<INewsLetterRepository, NewsLetterRepository>();
+            services.AddScoped<IColaboradorRepository, ColaboradorRepository>();
             #endregion
 
             //#region Início da implementação do estado de sessão para tempdata
@@ -72,6 +74,7 @@ namespace LojaVirtual
 
             services.AddScoped<Sessao>();//Permite que a classe Sessao seja utilizado em qualquer parte da LojaVirtual.
             services.AddScoped<LoginCliente>();
+            services.AddScoped<LoginColaborador>();
 
             #endregion
 
@@ -109,6 +112,10 @@ namespace LojaVirtual
 
             app.UseMvc(routes =>
             {
+                routes.MapRoute(
+                    name: "areas",
+                    template: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
+
                 routes.MapRoute(
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");

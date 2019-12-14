@@ -1,16 +1,16 @@
-﻿@model LojaVirtual.Models.Cliente
-
+﻿@model LojaVirtual.Models.Colaborador
 @{
     ViewData["Title"] = "Login";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <main role="main">
     <br />
     <br />
     <section class="container">
-        <aside class="col-sm-4">
+        <aside class="col-sm-6">
             <h3 class="subtitle-doc">
-                Login
+                Login do colaborador
                 @*<a href="#" data-html="code_login_1" class="showcode">[code]</a>*@
             </h3>
             <div id="code_login_1">
@@ -22,8 +22,6 @@
                             <p class="alert alert-danger">@Html.Raw(@ViewData["MSG_ERRO"])</p>
                         }
 
-                        @*<a href="/Home/CadastroCliente" class="float-right btn btn-outline-primary">Sign up</a>*@
-                        <a asp-controller="Home" asp-action="CadastroCliente" class="float-right btn btn-outline-primary">Cadastrar</a>
                         <h4 class="card-title mb-4 mt-1">Entrar</h4>
                         <form method="post">
                             <div class="form-group">
@@ -36,18 +34,20 @@
                                 <input asp-for="Senha" class="form-control" placeholder="******" type="password">
                             </div>
                             @*<div class="form-group">
-                <div class="checkbox">
-                    <label> <input type="checkbox"> Save password </label>
-                </div>
-            </div> *@
+                                    <div class="checkbox">
+                                        <label> <input type="checkbox"> Save password </label>
+                                    </div>
+                                </div> *@
                             <div class="form-group">
                                 <button type="submit" class="btn btn-primary btn-block"> Acessar </button>
                             </div>
                         </form>
                     </article>
-                </div> 
-            </div> 
+                </div>
+            </div>
         </aside>
     </section>
 
 </main>
+
+

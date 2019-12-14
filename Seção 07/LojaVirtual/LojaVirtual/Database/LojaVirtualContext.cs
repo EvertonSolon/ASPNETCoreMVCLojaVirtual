@@ -21,5 +21,6 @@ namespace LojaVirtual.Database
         // O nome das tabelas será criado pela nome das propriedades abaixo.
         public DbSet<Cliente> Clientes { get; set; }
         public DbSet<NewsLetterEmail> NewsLetterEmails { get; set; }
+        public DbSet<Colaborador> Colaboradores { get; set; }
     }
 }

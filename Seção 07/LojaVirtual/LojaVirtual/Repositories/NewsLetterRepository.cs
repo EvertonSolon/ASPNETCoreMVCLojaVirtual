@@ -19,7 +19,8 @@ namespace LojaVirtual.Repositories
 
         public void Atualizar(NewsLetterEmail model)
         {
-            throw new NotImplementedException();
+            _contexto.Update(model);
+            _contexto.SaveChanges();
         }
 
         public void Cadastrar(NewsLetterEmail model)
@@ -30,17 +31,19 @@ namespace LojaVirtual.Repositories
 
         public void Excluir(int Id)
         {
-            throw new NotImplementedException();
+            var objeto = Obter(Id);
+            _contexto.Remove(objeto);
+            _contexto.SaveChanges();
         }
 
         public NewsLetterEmail Obter(int Id)
         {
-            throw new NotImplementedException();
+            return _contexto.NewsLetterEmails.Find(Id);
         }
 
         public IEnumerable<NewsLetterEmail> ObterTodos()
         {
-            throw new NotImplementedException();
+            return _contexto.NewsLetterEmails.ToList();
         }
     }
 }

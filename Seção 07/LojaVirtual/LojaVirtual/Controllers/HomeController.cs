@@ -11,6 +11,7 @@ using LojaVirtual.Database;
 using LojaVirtual.Repositories.Contracts;
 using Microsoft.AspNetCore.Http;
 using LojaVirtual.Libraries.Login;
+using LojaVirtual.Libraries.Filtro;
 //using Microsoft.AspNetCore.Http;
 
 namespace LojaVirtual.Controllers
@@ -130,24 +131,10 @@ namespace LojaVirtual.Controllers
             return View();
         }
 
+        [ClienteAutorizacaoAttribute]
         public IActionResult Painel()
         {
-            var cliente = _loginCliente.GetCliente();
-
-            if (cliente == null)
-                return new ContentResult
-                {
-                    Content = $"Acesso negado"
-                };
-
-
-            return new ContentResult
-            {
-                Content = $"<p>Acesso concedido ao usu&aacuterio {cliente.Id}!</p>" +
-                $"<p><b>E-mail:</b> {cliente.Email}.</p>" +
-                $"<p><b>Idade:</b> {DateTime.Now.AddYears(-cliente.Nascimento.Year).ToString("yy")}.</p>",
-                ContentType = "text/html"
-            };
+            return new ContentResult { Content = "Este é o painel do cliente!"};
         }
 
         #region POST
