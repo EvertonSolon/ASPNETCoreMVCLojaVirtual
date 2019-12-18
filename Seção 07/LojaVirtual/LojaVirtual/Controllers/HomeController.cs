@@ -131,7 +131,7 @@ namespace LojaVirtual.Controllers
             return View();
         }
 
-        [ClienteAutorizacaoAttribute]
+        [ClienteAutorizacao]
         public IActionResult Painel()
         {
             return new ContentResult { Content = "Este é o painel do cliente!"};

@@ -59,7 +59,7 @@ namespace LojaVirtual.Areas.Colaborador.Controllers
             return View();
         }
 
-        [ColaboradorAutorizacaoAttribute]
+        [ColaboradorAutorizacao]
         public IActionResult Painel()
         {
             return View();
