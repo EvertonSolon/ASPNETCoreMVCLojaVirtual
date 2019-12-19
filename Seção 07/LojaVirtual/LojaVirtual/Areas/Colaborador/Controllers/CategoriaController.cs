@@ -6,6 +6,7 @@ using LojaVirtual.Libraries.Filtro;
 using LojaVirtual.Models;
 using LojaVirtual.Repositories.Contracts;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using X.PagedList;
 
 namespace LojaVirtual.Areas.Colaborador.Controllers
@@ -31,25 +32,53 @@ namespace LojaVirtual.Areas.Colaborador.Controllers
         [HttpGet]
         public IActionResult Cadastrar()
         {
+            ViewBag.Categorias = _categoriaRepository.ObterTodos().Select(x => new SelectListItem(x.Nome, x.Id.ToString()));
             return View();
         }
 
         [HttpPost]
         public IActionResult Cadastrar([FromForm]Categoria categoria)
         {
-            return View();
+            if (!ModelState.IsValid)
+            {
+                ViewBag.Categorias = _categoriaRepository.ObterTodos().Select(x => new SelectListItem(x.Nome, x.Id.ToString()));
+                return View();
+            }
+                
+
+            _categoriaRepository.Cadastrar(categoria);
+            TempData["MSG_SUCESSO"] = "Registro salvo com sucesso!";
+
+            return RedirectToAction(nameof(Index));
         }
 
         [HttpGet]
         public IActionResult Atualizar(int Id)
         {
-            return View();
+            var categoria = _categoriaRepository.Obter(Id);
+
+            ViewBag.Categorias = _categoriaRepository.ObterTodos().Where(x => x.Id != Id).
+                Select(x => new SelectListItem(x.Nome, x.Id.ToString()));
+
+            return View(categoria);
         }
 
         [HttpPost]
-        public IActionResult Atualizar([FromForm]Categoria categoria)
+        public IActionResult Atualizar([FromForm]Categoria categoria, int Id)
         {
-            return View();
+            if (!ModelState.IsValid)
+            {
+                ViewBag.Categorias = _categoriaRepository.ObterTodos().Where(x => x.Id != Id).
+                   Select(x => new SelectListItem(x.Nome, x.Id.ToString()));
+                return View();
+
+            }
+
+            _categoriaRepository.Atualizar(categoria);
+
+            TempData["MSG_SUCESSO"] = "Registro salvo com sucesso!";
+
+            return RedirectToAction(nameof(Index));
         }
 
         [HttpGet]

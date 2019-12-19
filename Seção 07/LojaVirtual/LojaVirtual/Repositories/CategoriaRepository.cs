@@ -47,5 +47,10 @@ namespace LojaVirtual.Repositories
         {
             return _contexto.Categorias.Include(x => x.CategoriaPai).ToPagedList<Categoria>(pagina ?? 1, _registrosPorPagina);
         }
+
+        public IEnumerable<Categoria> ObterTodos()
+        {
+            return _contexto.Categorias;
+        }
     }
 }

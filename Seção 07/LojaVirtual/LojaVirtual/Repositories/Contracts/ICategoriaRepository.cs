@@ -17,6 +17,8 @@ namespace LojaVirtual.Repositories.Contracts
 
         Categoria Obter(int Id);
 
+        IEnumerable<Categoria> ObterTodos();
+
         IPagedList<Categoria> ObterTodos(int? pagina);
     }
 }

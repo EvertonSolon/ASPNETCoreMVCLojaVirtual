@@ -7,6 +7,15 @@
 
 <a asp-action="Cadastrar" class="btn btn-primary">Cadastrar</a>
 
+@if (TempData["MSG_SUCESSO"] != null)
+{
+    <p class="alert alert-success">@TempData["MSG_SUCESSO"]</p>
+}
+else if (TempData["MSG_ERRO"] != null)
+{
+    <p class="alert alert-danger">@Html.Raw(@TempData["MSG_ERRO"])</p>
+}
+
 @if (Model.Any())
 {
 
@@ -43,7 +52,7 @@
                                 }*@
 
                             @*Opção 2*@
-                            @Html.DisplayFor(model => categoria.CategoriaPai.Id) - 
+                            @Html.DisplayFor(model => categoria.CategoriaPai.Id) -
                             @Html.DisplayFor(model => categoria.CategoriaPai.Nome)
 
                         </td>
