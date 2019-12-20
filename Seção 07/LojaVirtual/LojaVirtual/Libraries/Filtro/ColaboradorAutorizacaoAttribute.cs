@@ -29,7 +29,7 @@ namespace LojaVirtual.Libraries.Filtro
             var colaborador = _loginColaborador.GetColaborador();
 
             if (colaborador == null)
-                context.Result = new ContentResult { Content = "Acesso negado" };
+                context.Result = new RedirectToActionResult("Login", "Home", null);
         }
     }
 }
