@@ -84,7 +84,9 @@ namespace LojaVirtual.Areas.Colaborador.Controllers
         [HttpGet]
         public IActionResult Excluir(int Id)
         {
-            return View();
+            _categoriaRepository.Excluir(Id);
+            TempData["MSG_SUCESSO"] = "Registro excluído com sucesso!";
+            return RedirectToAction(nameof(Index));
         }
 
     }
