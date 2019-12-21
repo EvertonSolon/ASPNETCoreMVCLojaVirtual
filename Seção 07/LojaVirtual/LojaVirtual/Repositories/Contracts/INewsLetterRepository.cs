@@ -6,16 +6,7 @@ using System.Threading.Tasks;
 
 namespace LojaVirtual.Repositories.Contracts
 {
-    public interface INewsLetterRepository
+    public interface INewsLetterRepository : IBaseCrudRepository<NewsLetterEmail>
     {
-        void Cadastrar(NewsLetterEmail model);
-
-        void Atualizar(NewsLetterEmail model);
-
-        void Excluir(int Id);
-
-        NewsLetterEmail Obter(int Id);
-
-        IEnumerable<NewsLetterEmail> ObterTodos();
     }
 }

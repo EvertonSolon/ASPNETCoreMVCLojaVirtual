@@ -6,18 +6,8 @@ using System.Threading.Tasks;
 
 namespace LojaVirtual.Repositories.Contracts
 {
-    public interface IColaboradorRepository
+    public interface IColaboradorRepository : IBaseCrudRepository<Colaborador>
     {
         Colaborador Login(string Email, string Senha);
-
-        void Cadastrar(Colaborador model);
-
-        void Atualizar(Colaborador model);
-
-        void Excluir(int Id);
-
-        Colaborador Obter(int Id);
-
-        IEnumerable<Colaborador> ObterTodos();
     }
 }

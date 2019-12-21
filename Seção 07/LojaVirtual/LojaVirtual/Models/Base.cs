@@ -3,12 +3,12 @@ using System.ComponentModel.DataAnnotations;
 
 namespace LojaVirtual.Models
 {
-    public class Colaborador : BasePessoa
+    public class Base
     {
-        /// <summary>
-        /// C = Comum e G = Gerente
-        /// </summary>
+        public int Id { get; set; }
+
         [Required(ErrorMessageResourceType = typeof(Mensagem), ErrorMessageResourceName = "MSG_E001")]
-        public string Tipo { get; set; }
+        [MinLength(4, ErrorMessageResourceType = typeof(Mensagem), ErrorMessageResourceName = "MSG_E002")]
+        public string Nome { get; set; }
     }
 }

@@ -7,18 +7,8 @@ using X.PagedList;
 
 namespace LojaVirtual.Repositories.Contracts
 {
-    public interface ICategoriaRepository
+    public interface ICategoriaRepository : IBaseCrudRepository<Categoria>
     {
-        void Cadastrar(Categoria model);
-
-        void Atualizar(Categoria model);
-
-        void Excluir(int Id);
-
-        Categoria Obter(int Id);
-
-        IEnumerable<Categoria> ObterTodos();
-
         IPagedList<Categoria> ObterTodos(int? pagina);
     }
 }

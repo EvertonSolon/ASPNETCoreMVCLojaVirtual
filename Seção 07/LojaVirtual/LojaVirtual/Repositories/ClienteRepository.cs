@@ -31,7 +31,7 @@ namespace LojaVirtual.Repositories
 
         public void Excluir(int Id)
         {
-            var cliente = ObterCliente(Id);
+            var cliente = Obter(Id);
             _contexto.Remove(cliente);
             _contexto.SaveChanges();
         }
@@ -42,12 +42,12 @@ namespace LojaVirtual.Repositories
             return cliente;
         }
 
-        public Cliente ObterCliente(int Id)
+        public Cliente Obter(int Id)
         {
             return _contexto.Clientes.Find(Id);
         }
 
-        public IEnumerable<Cliente> ObterTodosClientes()
+        public IEnumerable<Cliente> ObterTodos()
         {
             return _contexto.Clientes.ToList();
         }

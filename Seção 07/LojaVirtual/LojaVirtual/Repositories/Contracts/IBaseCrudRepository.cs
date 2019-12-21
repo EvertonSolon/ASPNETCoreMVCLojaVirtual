@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace LojaVirtual.Repositories.Contracts
 {
-    public interface IBaseRepository<T> where T : class
+    public interface IBaseCrudRepository<T> where T : class
     {
         void Cadastrar(T model);
 
