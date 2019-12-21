@@ -2,16 +2,16 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using LojaVirtual.Libraries.Email;
-using LojaVirtual.Models;
+using LojaVirtual.Bibliotecas.Email;
+using LojaVirtual.Modelos;
 using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
-using LojaVirtual.Database;
-using LojaVirtual.Repositories.Contracts;
+using LojaVirtual.BaseDeDados;
+using LojaVirtual.Repositorios.Contracts;
 using Microsoft.AspNetCore.Http;
-using LojaVirtual.Libraries.Login;
-using LojaVirtual.Libraries.Filtro;
+using LojaVirtual.Bibliotecas.Login;
+using LojaVirtual.Bibliotecas.Filtro;
 //using Microsoft.AspNetCore.Http;
 
 namespace LojaVirtual.Controllers

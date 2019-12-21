@@ -1,4 +1,4 @@
-﻿using LojaVirtual.Models;
+﻿using LojaVirtual.Modelos;
 using Microsoft.AspNetCore.Mvc;
 
 namespace LojaVirtual.Controllers

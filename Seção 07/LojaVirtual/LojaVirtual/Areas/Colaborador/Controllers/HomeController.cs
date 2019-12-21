@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using LojaVirtual.Libraries.Filtro;
-using LojaVirtual.Libraries.Login;
-using LojaVirtual.Repositories.Contracts;
+using LojaVirtual.Bibliotecas.Filtro;
+using LojaVirtual.Bibliotecas.Login;
+using LojaVirtual.Repositorios.Contracts;
 using Microsoft.AspNetCore.Mvc;
 
 namespace LojaVirtual.Areas.Colaborador.Controllers
@@ -27,7 +27,7 @@ namespace LojaVirtual.Areas.Colaborador.Controllers
         }
 
         [HttpPost]
-        public IActionResult Login([FromForm]Models.Colaborador colaboradfor)
+        public IActionResult Login([FromForm]Modelos.Colaborador colaboradfor)
         {
             var colaboradorDb = _colaboradorRepository.Login(colaboradfor.Email, colaboradfor.Senha);
                        

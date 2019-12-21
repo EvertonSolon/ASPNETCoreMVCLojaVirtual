@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using LojaVirtual.Database;
+using LojaVirtual.BaseDeDados;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -12,11 +12,11 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.SqlServer;
-using LojaVirtual.Models;
-using LojaVirtual.Repositories;
-using LojaVirtual.Repositories.Contracts;
-using LojaVirtual.Libraries.Sessao;
-using LojaVirtual.Libraries.Login;
+using LojaVirtual.Modelos;
+using LojaVirtual.Repositorios;
+using LojaVirtual.Repositorios.Contracts;
+using LojaVirtual.Bibliotecas.Sessao;
+using LojaVirtual.Bibliotecas.Login;
 
 namespace LojaVirtual
 {
@@ -51,10 +51,10 @@ namespace LojaVirtual
 
             #region Repository pattern
             //services.AddScoped<IBaseRepository, BaseRepository>();
-            services.AddScoped<IClienteRepository, ClienteRepository>();
-            services.AddScoped<INewsLetterRepository, NewsLetterRepository>();
-            services.AddScoped<IColaboradorRepository, ColaboradorRepository>();
-            services.AddScoped<ICategoriaRepository, CategoriaRepository>();
+            services.AddScoped<IClienteRepository, ClienteRepositorio>();
+            services.AddScoped<INewsLetterRepository, NewsLetterRepositorio>();
+            services.AddScoped<IColaboradorRepository, ColaboradorRepositorio>();
+            services.AddScoped<ICategoriaRepository, CategoriaRepositorio>();
             #endregion
 
             //#region Início da implementação do estado de sessão para tempdata
