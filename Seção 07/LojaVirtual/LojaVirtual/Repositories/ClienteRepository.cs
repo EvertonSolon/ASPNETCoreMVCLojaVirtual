@@ -8,14 +8,10 @@ using LojaVirtual.Repositories.Contracts;
 
 namespace LojaVirtual.Repositories
 {
-    public class ClienteRepository : IClienteRepository
+    public class ClienteRepository : BaseRepository, IClienteRepository
     {
-        private readonly LojaVirtualContext _contexto;
 
-        public ClienteRepository(LojaVirtualContext contexto)
-        {
-            _contexto = contexto;
-        }
+        public ClienteRepository(LojaVirtualContext contexto) : base(contexto) { }
 
         public void Atualizar(Cliente cliente)
         {

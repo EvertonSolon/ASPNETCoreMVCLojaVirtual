@@ -8,14 +8,9 @@ using System.Threading.Tasks;
 
 namespace LojaVirtual.Repositories
 {
-    public class NewsLetterRepository : INewsLetterRepository
+    public class NewsLetterRepository : BaseRepository, INewsLetterRepository
     {
-        private readonly LojaVirtualContext _contexto;
-
-        public NewsLetterRepository(LojaVirtualContext contexto)
-        {
-            _contexto = contexto;
-        }
+        public NewsLetterRepository(LojaVirtualContext contexto) : base(contexto) { }
 
         public void Atualizar(NewsLetterEmail model)
         {

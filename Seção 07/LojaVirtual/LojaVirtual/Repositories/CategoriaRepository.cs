@@ -14,10 +14,7 @@ namespace LojaVirtual.Repositories
     {
         const int _registrosPorPagina = 10;
 
-        public CategoriaRepository(LojaVirtualContext contexto) : base(contexto)
-        {
-
-        }
+        public CategoriaRepository(LojaVirtualContext contexto) : base(contexto) { }
 
         public void Atualizar(Categoria model)
         {

@@ -6,8 +6,7 @@ using System.Threading.Tasks;
 
 namespace LojaVirtual.Repositories.Contracts
 {
-    public interface IColaboradorRepository : IBaseCrudRepository<Colaborador>
+    public interface IColaboradorRepository : IBaseCrudRepository<Colaborador>, ILogin<Colaborador>
     {
-        Colaborador Login(string Email, string Senha);
     }
 }
