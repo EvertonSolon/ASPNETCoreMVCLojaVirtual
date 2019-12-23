@@ -1,19 +1,19 @@
 ﻿using LojaVirtual.BaseDeDados;
+using LojaVirtual.Bibliotecas.PagedLlist;
 using LojaVirtual.Modelos;
 using LojaVirtual.Repositorios.Contracts;
-using System;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Options;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
+using X.PagedList;
 
 namespace LojaVirtual.Repositorios
 {
     public class ColaboradorRepositorio : BaseRepositorio, IColaboradorRepository
     {
-        public ColaboradorRepositorio(LojaVirtualContext contexto) : base(contexto)
-        {
-
-        }
+        public ColaboradorRepositorio(LojaVirtualContext contexto,
+            IOptions<PagedListConfiguracao> pagedListConfiguracoes) : base(contexto, pagedListConfiguracoes) { }
 
         public void Atualizar(Colaborador model)
         {
@@ -50,5 +50,9 @@ namespace LojaVirtual.Repositorios
             return _contexto.Colaboradores.ToList();
         }
 
+        public IPagedList<Colaborador> ObterTodos(int? pagina)
+        {
+            return _contexto.Colaboradores.ToPagedList<Colaborador>(pagina ?? 1, _RegistrosPorPagina);
+        }
     }
 }

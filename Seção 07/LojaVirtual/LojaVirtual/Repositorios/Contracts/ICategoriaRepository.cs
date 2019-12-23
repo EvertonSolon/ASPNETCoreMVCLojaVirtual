@@ -1,14 +1,10 @@
 ﻿using LojaVirtual.Modelos;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using X.PagedList;
+using LojaVirtual.Repositorios.Contracts.Base;
 
 namespace LojaVirtual.Repositorios.Contracts
 {
-    public interface ICategoriaRepository : IBaseCrudRepository<Categoria>
+    public interface ICategoriaRepository : IBaseCrudRepository<Categoria>, IBasePagedList<Categoria>
     {
-        IPagedList<Categoria> ObterTodos(int? pagina);
+        
     }
 }

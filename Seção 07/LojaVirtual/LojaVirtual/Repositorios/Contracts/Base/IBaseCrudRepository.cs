@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace LojaVirtual.Repositorios.Contracts
+namespace LojaVirtual.Repositorios.Contracts.Base
 {
     public interface IBaseCrudRepository<T> where T : class
     {

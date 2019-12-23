@@ -1,12 +1,9 @@
 ﻿using LojaVirtual.Modelos;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using LojaVirtual.Repositorios.Contracts.Base;
 
 namespace LojaVirtual.Repositorios.Contracts
 {
-    public interface IColaboradorRepository : IBaseCrudRepository<Colaborador>, ILogin<Colaborador>
+    public interface IColaboradorRepository : IBaseCrudRepository<Colaborador>, IBaseLogin<Colaborador>, IBasePagedList<Colaborador>
     {
     }
 }

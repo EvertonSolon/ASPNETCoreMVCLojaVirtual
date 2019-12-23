@@ -1,8 +1,5 @@
 ﻿using LojaVirtual.Modelos;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using LojaVirtual.Repositorios.Contracts.Base;
 
 namespace LojaVirtual.Repositorios.Contracts
 {

@@ -3,15 +3,19 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using LojaVirtual.BaseDeDados;
+using LojaVirtual.Bibliotecas.PagedLlist;
 using LojaVirtual.Modelos;
 using LojaVirtual.Repositorios.Contracts;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Options;
 
 namespace LojaVirtual.Repositorios
 {
     public class ClienteRepositorio : BaseRepositorio, IClienteRepository
     {
 
-        public ClienteRepositorio(LojaVirtualContext contexto) : base(contexto) { }
+        public ClienteRepositorio(LojaVirtualContext contexto,
+            IOptions<PagedListConfiguracao> pagedListConfiguracoes) : base(contexto, pagedListConfiguracoes) { }
 
         public void Atualizar(Cliente cliente)
         {

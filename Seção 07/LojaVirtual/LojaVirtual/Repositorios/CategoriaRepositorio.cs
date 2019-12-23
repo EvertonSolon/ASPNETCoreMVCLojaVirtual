@@ -1,20 +1,19 @@
 ﻿using LojaVirtual.BaseDeDados;
+using LojaVirtual.Bibliotecas.PagedLlist;
 using LojaVirtual.Modelos;
 using LojaVirtual.Repositorios.Contracts;
 using Microsoft.EntityFrameworkCore;
-using System;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Options;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using X.PagedList;
 
 namespace LojaVirtual.Repositorios
 {
     public class CategoriaRepositorio : BaseRepositorio, ICategoriaRepository
     {
-        const int _registrosPorPagina = 10;
-
-        public CategoriaRepositorio(LojaVirtualContext contexto) : base(contexto) { }
+        public CategoriaRepositorio(LojaVirtualContext contexto,
+            IOptions<PagedListConfiguracao> pagedListConfiguracoes) : base(contexto, pagedListConfiguracoes) { }
 
         public void Atualizar(Categoria model)
         {
@@ -42,7 +41,7 @@ namespace LojaVirtual.Repositorios
 
         public IPagedList<Categoria> ObterTodos(int? pagina)
         {
-            return _contexto.Categorias.Include(x => x.CategoriaPai).ToPagedList<Categoria>(pagina ?? 1, _registrosPorPagina);
+            return _contexto.Categorias.Include(x => x.CategoriaPai).ToPagedList(pagina ?? 1, _RegistrosPorPagina);
         }
 
         public IEnumerable<Categoria> ObterTodos()

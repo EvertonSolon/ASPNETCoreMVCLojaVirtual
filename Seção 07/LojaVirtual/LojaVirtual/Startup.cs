@@ -17,17 +17,30 @@ using LojaVirtual.Repositorios;
 using LojaVirtual.Repositorios.Contracts;
 using LojaVirtual.Bibliotecas.Sessao;
 using LojaVirtual.Bibliotecas.Login;
+using LojaVirtual.Bibliotecas.PagedLlist;
 
 namespace LojaVirtual
 {
     public class Startup
     {
+        public IConfiguration Configuration { get; }
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
         }
 
-        public IConfiguration Configuration { get; }
+        //public Startup(IHostingEnvironment variavelDeAmbiente)
+        //{
+        //    var builder = new ConfigurationBuilder()
+        //        .SetBasePath(variavelDeAmbiente.ContentRootPath)
+        //        .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+        //        .AddJsonFile($"appsettings.{variavelDeAmbiente.EnvironmentName}.json", optional: true)
+        //        .AddEnvironmentVariables();
+        //    Configuration = builder.Build();
+
+        //    var ambiente
+        //}
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
@@ -44,7 +57,7 @@ namespace LojaVirtual
             #endregion
 
             //Todas as classes que serão utilizadas pela injeção de dependência deverão ser incluídas aqui.
-
+            services.Configure<PagedListConfiguracao>(Configuration.GetSection("XPagedList"));
 
             //Configuração para que a injeção de dependência funcione na classe Sessao.
             services.AddHttpContextAccessor();

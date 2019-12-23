@@ -1,6 +1,9 @@
 ﻿using LojaVirtual.BaseDeDados;
+using LojaVirtual.Bibliotecas.PagedLlist;
 using LojaVirtual.Modelos;
 using LojaVirtual.Repositorios.Contracts;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +13,8 @@ namespace LojaVirtual.Repositorios
 {
     public class NewsLetterRepositorio : BaseRepositorio, INewsLetterRepository
     {
-        public NewsLetterRepositorio(LojaVirtualContext contexto) : base(contexto) { }
+        public NewsLetterRepositorio(LojaVirtualContext contexto,
+            IOptions<PagedListConfiguracao> pagedListConfiguracoes) : base(contexto, pagedListConfiguracoes) { }
 
         public void Atualizar(NewsLetterEmail model)
         {
