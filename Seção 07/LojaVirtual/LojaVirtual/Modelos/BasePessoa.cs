@@ -19,7 +19,10 @@ namespace LojaVirtual.Modelos
         /// porque não terá uma coluna na tabela Colaborador.
         /// </summary>
         [NotMapped]
-        [Display(Name = "Confirmação da senha")]
+        [Display(Name = "Repita a senha")]
+        [Required(ErrorMessageResourceType = typeof(Mensagem), ErrorMessageResourceName = "MSG_E001")]
+        [MinLength(6, ErrorMessageResourceType = typeof(Mensagem), ErrorMessageResourceName = "MSG_E002")]
+        [Compare("Senha", ErrorMessageResourceType = typeof(Mensagem), ErrorMessageResourceName = "MSG_E005")]
         public string ConfirmacaoSenha { get; set; }
     }
 }

@@ -47,12 +47,12 @@ namespace LojaVirtual.Repositorios
 
         public IEnumerable<Colaborador> ObterTodos()
         {
-            return _contexto.Colaboradores.ToList();
+            return _contexto.Colaboradores.Where(x => x.Tipo != "G");
         }
 
         public IPagedList<Colaborador> ObterTodos(int? pagina)
         {
-            return _contexto.Colaboradores.ToPagedList<Colaborador>(pagina ?? 1, _RegistrosPorPagina);
+            return _contexto.Colaboradores.Where(x => x.Tipo != "G").ToPagedList(pagina ?? 1, _RegistrosPorPagina);
         }
     }
 }

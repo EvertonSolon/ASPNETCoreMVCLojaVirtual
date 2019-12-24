@@ -1,0 +1,60 @@
+﻿
+@model IPagedList<Colaborador>
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Colaborador</h1>
+
+<a asp-action="Cadastrar" class="btn btn-primary">Cadastrar</a>
+
+@if (TempData["MSG_SUCESSO"] != null)
+{
+    <p class="alert alert-success">@TempData["MSG_SUCESSO"]</p>
+}
+else if (TempData["MSG_ERRO"] != null)
+{
+    <p class="alert alert-danger">@Html.Raw(@TempData["MSG_ERRO"])</p>
+}
+
+@if (Model.Any())
+{
+    <div class="table-responsive">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th scope="col">@Html.DisplayNameFor(x => x.First().Id)</th>
+                    <th scope="col">@Html.DisplayNameFor(x => x.First().Nome)</th>
+                    <th scope="col">@Html.DisplayNameFor(x => x.First().Email)</th>
+                    <th scope="col">Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var colaborador in Model)
+                {
+                    <tr>
+
+                        <th scope="row">@colaborador.Id</th>
+                        <td>@colaborador.Nome</td>
+                        <td>@Html.DisplayFor(model => colaborador.Email)</td>
+                        <td>
+                            <a asp-action="Atualizar" asp-route-id="@colaborador.Id" class="btn btn-secondary">Atualizar</a>
+                            <a asp-action="Excluir" asp-route-id="@colaborador.Id" class="btn btn-danger">Excluir</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    <!-- output a paging control that lets the user navigation to the previous page, next page, etc -->
+    @Html.PagedListPager((IPagedList)Model, pagina => Url.Action("Index", new { pagina }))
+}
+else
+{
+    <br /><br />
+    <p>
+        <span>Nenhum registro cadastrado!</span>
+    </p>
+    
+}

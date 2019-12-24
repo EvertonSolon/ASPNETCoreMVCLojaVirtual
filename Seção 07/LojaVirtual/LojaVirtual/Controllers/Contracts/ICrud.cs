@@ -1,8 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace LojaVirtual.Controllers.Contracts
 {
@@ -10,19 +6,19 @@ namespace LojaVirtual.Controllers.Contracts
     {
         IActionResult Index(int? pagina);
 
-        [HttpGet]
+        //[HttpGet]
         IActionResult Cadastrar();
 
-        [HttpPost]
+        //[HttpPost]
         IActionResult Cadastrar([FromForm]T model);
 
-        [HttpGet]
+        //[HttpGet]
         IActionResult Atualizar(int Id);
 
-        [HttpPost]
+        //[HttpPost]
         IActionResult Atualizar([FromForm]T model, int Id);
 
-        [HttpGet]
+        //[HttpGet]
         IActionResult Excluir(int Id);
     }
 }

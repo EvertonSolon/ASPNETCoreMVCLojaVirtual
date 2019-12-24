@@ -8,7 +8,7 @@ namespace LojaVirtual.Modelos
         /// <summary>
         /// C = Comum e G = Gerente
         /// </summary>
-        [Required(ErrorMessageResourceType = typeof(Mensagem), ErrorMessageResourceName = "MSG_E001")]
+        //[Required(ErrorMessageResourceType = typeof(Mensagem), ErrorMessageResourceName = "MSG_E001")]
         public string Tipo { get; set; }
     }
 }
