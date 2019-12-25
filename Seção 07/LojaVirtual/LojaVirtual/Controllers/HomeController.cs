@@ -22,14 +22,17 @@ namespace LojaVirtual.Controllers
         private readonly IClienteRepository _clienteRepository;
         private readonly INewsLetterRepository _newsLetterRepository;
         private readonly LoginCliente _loginCliente;
+        private readonly GerenciarEmail _gerenciarEmail;
 
         public HomeController(IClienteRepository clienteRepository, 
             INewsLetterRepository newsLetterRepository,
-            LoginCliente loginCliente)
+            LoginCliente loginCliente,
+            GerenciarEmail gerenciarEmail)
         {
             _clienteRepository = clienteRepository;
             _newsLetterRepository = newsLetterRepository;
             _loginCliente = loginCliente;
+            _gerenciarEmail = gerenciarEmail;
         }
 
         [HttpGet]
@@ -92,7 +95,7 @@ namespace LojaVirtual.Controllers
                 }
                 else
                 {
-                    ContatoEmail.EnviarContatoPorEmail(contato);
+                    _gerenciarEmail.EnviarContatoPorEmail(contato);
 
                     //Explicação
                     //var nome = HttpContext.Request.Form["nome"];

@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Linq;
+using LojaVirtual.Bibliotecas.Email;
 using LojaVirtual.Bibliotecas.Filtro;
 using LojaVirtual.Bibliotecas.Lang;
+using LojaVirtual.Bibliotecas.Texto;
 using LojaVirtual.Controllers.Contracts;
 using LojaVirtual.Repositorios.Contracts;
 using Microsoft.AspNetCore.Mvc;
@@ -18,6 +20,22 @@ namespace LojaVirtual.Areas.Colaborador.Controllers
         public ColaboradorController(IColaboradorRepository colaboradorRepository)
         {
             _colaboradorRepository = colaboradorRepository;
+        }
+
+        [HttpGet]
+        public IActionResult GerarSenha(int id)
+        {
+            var objeto = _colaboradorRepository.Obter(id);
+            var randomSTring = GeradorDeChaves.RandomString(8);
+            var getUniqueKey = GeradorDeChaves.GetUniqueKey(8);
+            var getUniqueKeyOriginal = GeradorDeChaves.GetUniqueKeyOriginal_BASED(8);
+
+            objeto.Senha = getUniqueKey;
+
+            _colaboradorRepository.Atualizar(objeto);
+                       
+
+            return null;
         }
 
         public IActionResult Atualizar(int Id)

@@ -18,6 +18,9 @@ using LojaVirtual.Repositorios.Contracts;
 using LojaVirtual.Bibliotecas.Sessao;
 using LojaVirtual.Bibliotecas.Login;
 using LojaVirtual.Bibliotecas.PagedLlist;
+using LojaVirtual.Bibliotecas.Email;
+using System.Net.Mail;
+using System.Net;
 
 namespace LojaVirtual
 {
@@ -56,8 +59,11 @@ namespace LojaVirtual
             */
             #endregion
 
-            //Todas as classes que serão utilizadas pela injeção de dependência deverão ser incluídas aqui.
+            //Para obter as configuração do appsettings.
             services.Configure<PagedListConfiguracao>(Configuration.GetSection("XPagedList"));
+            services.Configure<EmailConfiguracao>(Configuration.GetSection("Email"));
+
+            //Todas as classes que serão utilizadas pela injeção de dependência deverão ser incluídas nas linhas abaixo.
 
             //Configuração para que a injeção de dependência funcione na classe Sessao.
             services.AddHttpContextAccessor();
@@ -68,6 +74,25 @@ namespace LojaVirtual
             services.AddScoped<INewsLetterRepository, NewsLetterRepositorio>();
             services.AddScoped<IColaboradorRepository, ColaboradorRepositorio>();
             services.AddScoped<ICategoriaRepository, CategoriaRepositorio>();
+
+            //Teste 1 
+            services.AddScoped(options =>
+            {
+                var smtp = new SmtpClient
+                {
+                    Host = Configuration.GetValue<string>("Email:ServerSMTP"),
+                    Port = Configuration.GetValue<int>("Email:ServerPort"),
+                    UseDefaultCredentials = false,
+                    Credentials = new NetworkCredential(Configuration.GetValue<string>("Email:UserName"),
+                                  Configuration.GetValue<string>("Email:Password")),
+                    EnableSsl = true
+                };
+
+                return smtp;
+            });
+
+            services.AddScoped<GerenciarEmail>();
+
             #endregion
 
             //#region Início da implementação do estado de sessão para tempdata

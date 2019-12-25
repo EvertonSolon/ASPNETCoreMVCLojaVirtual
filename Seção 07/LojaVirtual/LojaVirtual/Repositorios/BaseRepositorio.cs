@@ -8,13 +8,13 @@ namespace LojaVirtual.Repositorios
     public class BaseRepositorio
     {
         protected readonly LojaVirtualContext _contexto;
-        protected readonly IOptions<PagedListConfiguracao> _pagedListConfiguracoes;
+        //protected readonly IOptions<PagedListConfiguracao> _pagedListConfiguracoes;
         protected readonly int _RegistrosPorPagina;
 
         public BaseRepositorio(LojaVirtualContext contexto, IOptions<PagedListConfiguracao> pagedListConfiguracoes)
         {
             _contexto = contexto;
-            _pagedListConfiguracoes = pagedListConfiguracoes;
+            //_pagedListConfiguracoes = pagedListConfiguracoes;
             _RegistrosPorPagina = pagedListConfiguracoes.Value.Views.RegistrosPorPagina;
         }
     }

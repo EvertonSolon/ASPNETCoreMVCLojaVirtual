@@ -6,7 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Include="Bibliotecas\Email\ContatoEmail.cs" />
+    <Content Include="Bibliotecas\Email\GerenciarEmail.cs" />
   </ItemGroup>
 
 
