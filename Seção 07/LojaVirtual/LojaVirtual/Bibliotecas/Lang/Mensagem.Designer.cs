@@ -115,11 +115,29 @@ namespace LojaVirtual.Bibliotecas.Lang {
         }
         
         /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Registro atualizado com sucesso!.
+        /// </summary>
+        public static string MSG_SUCESSO_ATUALIZADO {
+            get {
+                return ResourceManager.GetString("MSG_SUCESSO_ATUALIZADO", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Consulta uma cadeia de caracteres localizada semelhante a Registro excluído com sucesso!.
         /// </summary>
         public static string MSG_SUCESSO_EXCLUSAO {
             get {
                 return ResourceManager.GetString("MSG_SUCESSO_EXCLUSAO", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Senha enviada com sucesso!.
+        /// </summary>
+        public static string MSG_SUCESSO_SENHA_ENVIADA {
+            get {
+                return ResourceManager.GetString("MSG_SUCESSO_SENHA_ENVIADA", resourceCulture);
             }
         }
     }

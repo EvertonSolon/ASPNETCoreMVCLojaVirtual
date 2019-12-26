@@ -135,7 +135,13 @@
   <data name="MSG_SUCESSO" xml:space="preserve">
     <value>Registro salvo com sucesso!</value>
   </data>
+  <data name="MSG_SUCESSO_ATUALIZADO" xml:space="preserve">
+    <value>Registro atualizado com sucesso!</value>
+  </data>
   <data name="MSG_SUCESSO_EXCLUSAO" xml:space="preserve">
     <value>Registro excluído com sucesso!</value>
+  </data>
+  <data name="MSG_SUCESSO_SENHA_ENVIADA" xml:space="preserve">
+    <value>Senha enviada com sucesso!</value>
   </data>
 </root>

@@ -18,6 +18,7 @@ namespace LojaVirtual.Bibliotecas.Email
         public GerenciarEmail(SmtpClient smtp, IOptions<EmailConfiguracao> emailConfiguracoes)
         {
             _smtp = smtp;
+            _emailConfiguracoes = emailConfiguracoes;
         }
 
         public void EnviarContatoPorEmail(Contato contato)
@@ -58,18 +59,39 @@ namespace LojaVirtual.Bibliotecas.Email
             corpoMsg.Append($"<p><b>E-mail:</b> {colaborador.Email}</p>");
             corpoMsg.Append($"<p><b>Sua senha é:</b> {colaborador.Senha}</p>");
             corpoMsg.Append("<p>E-mail enviado do site Loja Virtual</p>");
-            
-            var mensagem = new MailMessage
+
+            try
             {
-                From = new MailAddress(_emailConfiguracoes.Value.UserName, "Everton Remetente"),
-                Subject = $"Colaborador - Loja Virtual - Senha do colaborador: {colaborador.Nome}",
-                Body = corpoMsg.ToString(),
-                IsBodyHtml = true
-            };
+                var mensagem = new MailMessage
+                {
+                    From = new MailAddress(_emailConfiguracoes.Value.UserName, "Everton Remetente"),
+                    Subject = $"Colaborador - Loja Virtual - Senha do colaborador: {colaborador.Nome}",
+                    Body = corpoMsg.ToString(),
+                    IsBodyHtml = true
+                };
 
-            mensagem.To.Add(new MailAddress(colaborador.Email));
+                mensagem.To.Add(new MailAddress(colaborador.Email));
 
-            _smtp.Send(mensagem);
+                _smtp.Send(mensagem);
+            }
+            catch(FormatException formatException)
+            {
+                if (formatException.Message.Contains("form required for an e-mail address"))
+                    throw new FormatException("Usuário do e-mail no formato incorreto!");
+
+                throw;
+            }
+            catch (SmtpException smtpException)
+            {
+                if (smtpException.Message.Contains("Authentication Required"))
+                    throw new SmtpException("Verifique o usuário e / ou senha da autentiação ou a configuração de acesso a app menos seguro!");
+
+                throw;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
     }
 }

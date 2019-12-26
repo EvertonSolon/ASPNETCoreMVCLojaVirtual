@@ -16,16 +16,21 @@ namespace LojaVirtual.Areas.Colaborador.Controllers
     public class ColaboradorController : Controller, ICrud<Modelos.Colaborador>
     {
         private readonly IColaboradorRepository _colaboradorRepository;
+        private readonly GerenciarEmail _gerenciarEmail;
 
-        public ColaboradorController(IColaboradorRepository colaboradorRepository)
+        public ColaboradorController(IColaboradorRepository colaboradorRepository,
+            GerenciarEmail gerenciarEmail)
         {
             _colaboradorRepository = colaboradorRepository;
+            _gerenciarEmail = gerenciarEmail;
         }
 
         [HttpGet]
         public IActionResult GerarSenha(int id)
         {
             var objeto = _colaboradorRepository.Obter(id);
+
+            //Usei as variáveis abaixo para ver o resultado do gerador de chaves.
             var randomSTring = GeradorDeChaves.RandomString(8);
             var getUniqueKey = GeradorDeChaves.GetUniqueKey(8);
             var getUniqueKeyOriginal = GeradorDeChaves.GetUniqueKeyOriginal_BASED(8);
@@ -33,14 +38,18 @@ namespace LojaVirtual.Areas.Colaborador.Controllers
             objeto.Senha = getUniqueKey;
 
             _colaboradorRepository.Atualizar(objeto);
-                       
 
-            return null;
+            _gerenciarEmail.EnviarSenhaParaColaboradorPorEmail(objeto);
+
+            TempData["MSG_SUCESSO"] = Mensagem.MSG_SUCESSO_SENHA_ENVIADA;
+
+            return RedirectToAction(nameof(Index));
         }
 
         public IActionResult Atualizar(int Id)
         {
             var resultado = _colaboradorRepository.Obter(Id);
+            TempData["Senha"] = resultado.Senha; //Workarround para validação do post.
 
             return View(resultado);
         }
@@ -48,10 +57,15 @@ namespace LojaVirtual.Areas.Colaborador.Controllers
         [HttpPost]
         public IActionResult Atualizar([FromForm] Modelos.Colaborador model, int Id)
         {
+            ModelState.Remove(nameof(model.Senha));
+            ModelState.Remove(nameof(model.ConfirmacaoSenha));
+
             if (!ModelState.IsValid)
             {
                 return View();
             }
+
+            model.Senha = TempData["Senha"].ToString();
 
             _colaboradorRepository.Atualizar(model);
 
@@ -67,15 +81,23 @@ namespace LojaVirtual.Areas.Colaborador.Controllers
             return View();
         }
 
+        [HttpPost]
         public IActionResult Cadastrar([FromForm] Modelos.Colaborador model)
         {
+            ModelState.Remove(model.Senha);
+            ModelState.Remove(model.ConfirmacaoSenha);
+
             if (!ModelState.IsValid)
             {
                 return View();
             }
 
+
             model.Tipo = "C";
+            model.Senha = GeradorDeChaves.GetUniqueKey(8);
             _colaboradorRepository.Cadastrar(model);
+            _gerenciarEmail.EnviarSenhaParaColaboradorPorEmail(model);
+
             TempData["MSG_SUCESSO"] = Mensagem.MSG_SUCESSO;
             return RedirectToAction(nameof(Index));
         }
