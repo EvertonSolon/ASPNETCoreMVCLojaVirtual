@@ -1,4 +1,5 @@
 ﻿using LojaVirtual.Bibliotecas.Lang;
+using LojaVirtual.Modelos.Bases;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 

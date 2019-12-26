@@ -1,7 +1,7 @@
 ﻿using LojaVirtual.Bibliotecas.Lang;
 using System.ComponentModel.DataAnnotations;
 
-namespace LojaVirtual.Modelos
+namespace LojaVirtual.Modelos.Bases
 {
     public class Base
     {

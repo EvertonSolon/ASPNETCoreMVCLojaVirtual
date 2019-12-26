@@ -12,7 +12,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 namespace LojaVirtual.Areas.Colaborador.Controllers
 {
     [Area("Colaborador")]
-    //[ColaboradorAutorizacao]
+    //[ColaboradorAutorizacao("G")]
     public class ColaboradorController : Controller, ICrud<Modelos.Colaborador>
     {
         private readonly IColaboradorRepository _colaboradorRepository;
@@ -64,7 +64,7 @@ namespace LojaVirtual.Areas.Colaborador.Controllers
             {
                 return View();
             }
-
+            
             model.Senha = TempData["Senha"].ToString();
 
             _colaboradorRepository.Atualizar(model);
@@ -84,8 +84,8 @@ namespace LojaVirtual.Areas.Colaborador.Controllers
         [HttpPost]
         public IActionResult Cadastrar([FromForm] Modelos.Colaborador model)
         {
-            ModelState.Remove(model.Senha);
-            ModelState.Remove(model.ConfirmacaoSenha);
+            ModelState.Remove(nameof(model.Senha));
+            ModelState.Remove(nameof(model.ConfirmacaoSenha));
 
             if (!ModelState.IsValid)
             {

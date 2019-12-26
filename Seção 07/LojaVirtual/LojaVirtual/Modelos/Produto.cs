@@ -1,4 +1,6 @@
-﻿namespace LojaVirtual.Modelos
+﻿using LojaVirtual.Modelos.Bases;
+
+namespace LojaVirtual.Modelos
 {
     public class Produto : Base
     {

@@ -47,6 +47,12 @@ namespace LojaVirtual.Repositorios
             return _contexto.Clientes.Find(Id);
         }
 
+        public List<Cliente> ObterPorEmail(string email)
+        {
+            var resultado = _contexto.Clientes.Where(x => x.Email == email).ToList();
+            return resultado;
+        }
+
         public IEnumerable<Cliente> ObterTodos()
         {
             return _contexto.Clientes.ToList();

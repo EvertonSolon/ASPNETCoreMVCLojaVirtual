@@ -1,11 +1,11 @@
 ﻿using LojaVirtual.Bibliotecas.Lang;
+using LojaVirtual.Modelos.Bases;
 using System;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace LojaVirtual.Modelos
 {
-    public class Cliente : BasePessoa
+    public class Cliente : LoginBase
     {
         [Required(ErrorMessageResourceType = typeof(Mensagem), ErrorMessageResourceName = "MSG_E001")]
         public DateTime Nascimento { get; set; }

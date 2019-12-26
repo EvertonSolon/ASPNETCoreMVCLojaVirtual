@@ -1,9 +1,10 @@
-﻿using LojaVirtual.Bibliotecas.Lang;
-using System.ComponentModel.DataAnnotations;
+﻿using LojaVirtual.Bibliotecas.Validacao;
+using LojaVirtual.Modelos.Bases;
+
 
 namespace LojaVirtual.Modelos
 {
-    public class Colaborador : BasePessoa
+    public class Colaborador : LoginBase
     {
         /// <summary>
         /// C = Comum e G = Gerente

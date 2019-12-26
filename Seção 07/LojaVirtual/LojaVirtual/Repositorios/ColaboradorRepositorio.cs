@@ -2,7 +2,7 @@
 using LojaVirtual.Bibliotecas.PagedLlist;
 using LojaVirtual.Modelos;
 using LojaVirtual.Repositorios.Contracts;
-using Microsoft.Extensions.Configuration;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using System.Collections.Generic;
 using System.Linq;
@@ -42,7 +42,14 @@ namespace LojaVirtual.Repositorios
 
         public Colaborador Obter(int Id)
         {
-            return _contexto.Colaboradores.Find(Id);
+            var resultado = _contexto.Colaboradores.Find(Id);
+            return resultado;
+        }
+
+        public List<Colaborador> ObterPorEmail(string email)
+        {
+            var resultado = _contexto.Colaboradores.Where(x => x.Email == email).AsNoTracking().ToList();
+            return resultado;
         }
 
         public IEnumerable<Colaborador> ObterTodos()

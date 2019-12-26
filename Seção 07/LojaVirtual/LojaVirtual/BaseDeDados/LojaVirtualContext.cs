@@ -1,9 +1,5 @@
 ﻿using LojaVirtual.Modelos;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace LojaVirtual.BaseDeDados
 {
@@ -12,10 +8,11 @@ namespace LojaVirtual.BaseDeDados
     /// </summary>
     public class LojaVirtualContext : DbContext
     {
-        public LojaVirtualContext(DbContextOptions<LojaVirtualContext> options) : base(options)
-        {
+        public LojaVirtualContext(DbContextOptions<LojaVirtualContext> options) : base(options) { }
 
-        }
+        //Para encontrar um erro do Entity Framework Core que ocorria ao persistir a atualização do objeto no banco.
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) => 
+            optionsBuilder.EnableSensitiveDataLogging();
 
         // A comunicação entre as tabelas do banco de dados e os objetos da pasta Models se dará pelas linhas abaixo.
         // O nome das tabelas será criado pela nome das propriedades abaixo.
@@ -23,5 +20,6 @@ namespace LojaVirtual.BaseDeDados
         public DbSet<NewsLetterEmail> NewsLetterEmails { get; set; }
         public DbSet<Colaborador> Colaboradores { get; set; }
         public DbSet<Categoria> Categorias { get; set; }
+
     }
 }

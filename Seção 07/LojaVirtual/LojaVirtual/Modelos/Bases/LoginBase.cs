@@ -1,13 +1,21 @@
 ﻿using LojaVirtual.Bibliotecas.Lang;
+using LojaVirtual.Bibliotecas.Validacao;
+using LojaVirtual.Modelos.Bases;
+using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Threading.Tasks;
 
-namespace LojaVirtual.Modelos
+namespace LojaVirtual.Modelos.Bases
 {
-    public class BasePessoa : Base
+    public class LoginBase : Base
     {
         [Required(ErrorMessageResourceType = typeof(Mensagem), ErrorMessageResourceName = "MSG_E001")]
         [EmailAddress(ErrorMessageResourceType = typeof(Mensagem), ErrorMessageResourceName = "MSG_E004")]
+        [Display(Name = "E-mail")]
+        [EmailUnico]
         public string Email { get; set; }
 
         [Required(ErrorMessageResourceType = typeof(Mensagem), ErrorMessageResourceName = "MSG_E001")]

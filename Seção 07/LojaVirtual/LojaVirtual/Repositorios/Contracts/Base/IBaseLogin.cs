@@ -8,5 +8,7 @@ namespace LojaVirtual.Repositorios.Contracts.Base
     public interface IBaseLogin<T> where T : class
     {
         T Login(string email, string senha);
+
+        List<T> ObterPorEmail(string email);
     }
 }
