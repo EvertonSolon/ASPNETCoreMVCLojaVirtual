@@ -5,6 +5,7 @@ using LojaVirtual.Bibliotecas.Filtro;
 using LojaVirtual.Bibliotecas.Lang;
 using LojaVirtual.Bibliotecas.Texto;
 using LojaVirtual.Controllers.Contracts;
+using LojaVirtual.Modelos.Contantes;
 using LojaVirtual.Repositorios.Contracts;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -12,7 +13,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 namespace LojaVirtual.Areas.Colaborador.Controllers
 {
     [Area("Colaborador")]
-    //[ColaboradorAutorizacao("G")]
+    [ColaboradorAutorizacao(ColaboradorTipoConstante.Gerente)]
     public class ColaboradorController : Controller, ICrud<Modelos.Colaborador>
     {
         private readonly IColaboradorRepository _colaboradorRepository;
@@ -26,6 +27,7 @@ namespace LojaVirtual.Areas.Colaborador.Controllers
         }
 
         [HttpGet]
+        [ValidateHttpReferer]
         public IActionResult GerarSenha(int id)
         {
             var objeto = _colaboradorRepository.Obter(id);
@@ -93,7 +95,7 @@ namespace LojaVirtual.Areas.Colaborador.Controllers
             }
 
 
-            model.Tipo = "C";
+            model.Tipo = ColaboradorTipoConstante.Comum;
             model.Senha = GeradorDeChaves.GetUniqueKey(8);
             _colaboradorRepository.Cadastrar(model);
             _gerenciarEmail.EnviarSenhaParaColaboradorPorEmail(model);
@@ -102,6 +104,7 @@ namespace LojaVirtual.Areas.Colaborador.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        [ValidateHttpReferer]
         public IActionResult Excluir(int Id)
         {
             _colaboradorRepository.Excluir(Id);

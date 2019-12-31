@@ -7,9 +7,8 @@ namespace LojaVirtual.Modelos
     public class Colaborador : LoginBase
     {
         /// <summary>
-        /// C = Comum e G = Gerente
+        /// Veja os tipos na classe ColaboradorTipoConstante
         /// </summary>
-        //[Required(ErrorMessageResourceType = typeof(Mensagem), ErrorMessageResourceName = "MSG_E001")]
         public string Tipo { get; set; }
     }
 }

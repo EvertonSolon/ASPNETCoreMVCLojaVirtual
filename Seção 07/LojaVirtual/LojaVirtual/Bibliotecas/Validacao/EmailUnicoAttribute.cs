@@ -23,7 +23,7 @@ namespace LojaVirtual.Bibliotecas.Validacao
                 var _repositorio = validationContext.GetService(typeof(IColaboradorRepository)) as IColaboradorRepository;
                 var resultados = _repositorio.ObterPorEmail(email);
                 var objeto = validationContext.ObjectInstance as Colaborador;
-                jaExisteEmail = ValidarExistenciaEmail(resultados.Count, objeto.Id, resultados.Any() ? resultados[1]?.Id : null);
+                jaExisteEmail = ValidarExistenciaEmail(resultados.Count, objeto.Id, resultados.Any() ? resultados[0]?.Id : null);
             }
             else if (tipoObjeto == typeof(Cliente))
             {

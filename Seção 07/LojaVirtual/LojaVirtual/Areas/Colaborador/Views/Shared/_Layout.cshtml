@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿@inject LojaVirtual.Bibliotecas.Login.LoginColaborador colaborador
+
+<!DOCTYPE html>
 <html lang="pt-br">
 <head>
     <meta charset="utf-8">
@@ -45,6 +47,17 @@
                                 Painel de controle
                             </a>
                         </li>
+
+                        @if (colaborador.GetColaborador().Tipo == ColaboradorTipoConstante.Gerente)
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link" asp-action="Index" asp-controller="Colaborador">
+                                    <span data-feather="users"></span>
+                                    Colaborador
+                                </a>
+                            </li>
+                        }
+
                         <li class="nav-item">
                             <a class="nav-link" asp-action="Index" asp-controller="Categoria">
                                 <span data-feather="file"></span>
@@ -57,6 +70,7 @@
                                 Produtos
                             </a>
                         </li>
+
                         <li class="nav-item">
                             <a class="nav-link" href="#">
                                 <span data-feather="users"></span>
