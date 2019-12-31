@@ -97,7 +97,7 @@ namespace LojaVirtual.Bibliotecas.Lang {
         }
         
         /// <summary>
-        ///   Consulta uma cadeia de caracteres localizada semelhante a O valor digitado não confere com o valor do campo {1}!.
+        ///   Consulta uma cadeia de caracteres localizada semelhante a O valor digitado não confere com o valor do campo {0}!.
         /// </summary>
         public static string MSG_E005 {
             get {

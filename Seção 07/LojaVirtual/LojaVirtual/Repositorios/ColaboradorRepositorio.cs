@@ -62,5 +62,10 @@ namespace LojaVirtual.Repositorios
         {
             return _contexto.Colaboradores.Where(x => x.Tipo != ColaboradorTipoConstante.Gerente).ToPagedList(pagina ?? 1, _RegistrosPorPagina);
         }
+
+        public IPagedList<Colaborador> ObterTodos(int? pagina, string pesquisa)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

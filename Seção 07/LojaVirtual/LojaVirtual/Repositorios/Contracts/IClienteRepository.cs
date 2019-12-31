@@ -3,7 +3,7 @@ using LojaVirtual.Repositorios.Contracts.Base;
 
 namespace LojaVirtual.Repositorios.Contracts
 {
-    public interface IClienteRepository : IBaseCrudRepository<Cliente>, IBaseLogin<Cliente>
+    public interface IClienteRepository : IBaseCrudRepository<Cliente>, IBaseLogin<Cliente>, IBasePagedList<Cliente>
     {
     }
 }

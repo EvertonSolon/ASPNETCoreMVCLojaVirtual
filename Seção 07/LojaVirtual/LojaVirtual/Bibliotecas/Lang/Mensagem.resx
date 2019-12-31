@@ -119,29 +119,38 @@
   </resheader>
   <data name="MSG_E001" xml:space="preserve">
     <value>O campo {0} é obrigatório!</value>
+    <comment>O campo X é obrigatório!</comment>
   </data>
   <data name="MSG_E002" xml:space="preserve">
     <value>O campo {0} deve ter no mínimo {1} caracteres!</value>
+    <comment>O campo X deve ter no mínimo Qtde caracteres!</comment>
   </data>
   <data name="MSG_E003" xml:space="preserve">
     <value>O campo {0} deve ter no máximo {1} caracteres!</value>
+    <comment>O campo X deve ter no máximo Qtde caracteres!</comment>
   </data>
   <data name="MSG_E004" xml:space="preserve">
     <value>O campo {0} não é válido!</value>
+    <comment>O campo X não é válido!</comment>
   </data>
   <data name="MSG_E005" xml:space="preserve">
-    <value>O valor digitado não confere com o valor do campo {1}!</value>
+    <value>O valor digitado não confere com o valor do campo {0}!</value>
+    <comment>O valor digitado não confere com o valor do campo X!</comment>
   </data>
   <data name="MSG_SUCESSO" xml:space="preserve">
     <value>Registro salvo com sucesso!</value>
+    <comment>Registro salvo com sucesso!</comment>
   </data>
   <data name="MSG_SUCESSO_ATUALIZADO" xml:space="preserve">
     <value>Registro atualizado com sucesso!</value>
+    <comment>Registro atualizado com sucesso!</comment>
   </data>
   <data name="MSG_SUCESSO_EXCLUSAO" xml:space="preserve">
     <value>Registro excluído com sucesso!</value>
+    <comment>Registro excluído com sucesso!</comment>
   </data>
   <data name="MSG_SUCESSO_SENHA_ENVIADA" xml:space="preserve">
     <value>Senha enviada com sucesso!</value>
+    <comment>Senha enviada com sucesso!</comment>
   </data>
 </root>

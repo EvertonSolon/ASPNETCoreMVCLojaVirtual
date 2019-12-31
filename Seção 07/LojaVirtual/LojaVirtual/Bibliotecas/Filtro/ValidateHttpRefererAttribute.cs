@@ -33,7 +33,7 @@ namespace LojaVirtual.Bibliotecas.Filtro
         public void OnActionExecuted(ActionExecutedContext context)
         {
             //Executado após passar pelo controlador
-            throw new NotImplementedException();
+            
         }
 
         

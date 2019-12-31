@@ -6,8 +6,10 @@ using LojaVirtual.BaseDeDados;
 using LojaVirtual.Bibliotecas.PagedLlist;
 using LojaVirtual.Modelos;
 using LojaVirtual.Repositorios.Contracts;
+using LojaVirtual.Repositorios.Contracts.Base;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
+using X.PagedList;
 
 namespace LojaVirtual.Repositorios
 {
@@ -56,6 +58,24 @@ namespace LojaVirtual.Repositorios
         public IEnumerable<Cliente> ObterTodos()
         {
             return _contexto.Clientes.ToList();
+        }
+
+        public IPagedList<Cliente> ObterTodos(int? pagina, string pesquisa)
+        {
+            var bancoClientes = _contexto.Clientes.AsQueryable();
+
+            if (!string.IsNullOrEmpty(pesquisa))
+            {
+                bancoClientes = bancoClientes.Where(x => x.Nome.Contains(pesquisa.Trim()) || 
+                                                    x.Email.Contains(pesquisa.Trim()));
+            }
+
+            return bancoClientes.ToPagedList(pagina ?? 1, _RegistrosPorPagina);
+        }
+
+        public IPagedList<Cliente> ObterTodos(int? pagina)
+        {
+            return _contexto.Clientes.ToPagedList(pagina ?? 1, _RegistrosPorPagina);
         }
     }
 }

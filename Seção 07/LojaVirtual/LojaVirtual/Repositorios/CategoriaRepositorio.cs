@@ -48,5 +48,10 @@ namespace LojaVirtual.Repositorios
         {
             return _contexto.Categorias;
         }
+
+        public IPagedList<Categoria> ObterTodos(int? pagina, string pesquisa)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }
