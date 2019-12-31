@@ -67,6 +67,8 @@ namespace LojaVirtual
             services.AddScoped<INewsLetterRepository, NewsLetterRepositorio>();
             services.AddScoped<IColaboradorRepository, ColaboradorRepositorio>();
             services.AddScoped<ICategoriaRepository, CategoriaRepositorio>();
+            services.AddScoped<IProdutoRepository, ProdutoRepositorio>();
+            services.AddScoped<IImagemRepository, ImagemRepositorio>();
 
             //Teste 1 
             services.AddScoped(options =>
