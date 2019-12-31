@@ -18,5 +18,11 @@ namespace LojaVirtual.Modelos
 
         [Required(ErrorMessageResourceType = typeof(Mensagem), ErrorMessageResourceName = "MSG_E001")]
         public string Telefone { get; set; }
+
+        /// <summary>
+        /// Para clientes mal intencionados na aplicação.
+        /// </summary>
+        [Display(Name = "Situação")]
+        public string Situacao { get; set; }
     }
 }
