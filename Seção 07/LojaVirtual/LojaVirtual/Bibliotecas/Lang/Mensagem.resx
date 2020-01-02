@@ -137,6 +137,10 @@
     <value>O valor digitado não confere com o valor do campo {0}!</value>
     <comment>O valor digitado não confere com o valor do campo X!</comment>
   </data>
+  <data name="MSG_FORA_DO_LIMITE" xml:space="preserve">
+    <value>Valor do campo {0} está fora dos limites minimo {1} e máximo {2}.</value>
+    <comment>Valor do campo X está fora dos limites dos limites mínimo Y e  máximo Z.</comment>
+  </data>
   <data name="MSG_SUCESSO" xml:space="preserve">
     <value>Registro salvo com sucesso!</value>
     <comment>Registro salvo com sucesso!</comment>

@@ -106,6 +106,15 @@ namespace LojaVirtual.Bibliotecas.Lang {
         }
         
         /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Valor do campo {0} está fora dos limites minimo {1} e máximo {2}..
+        /// </summary>
+        public static string MSG_FORA_DO_LIMITE {
+            get {
+                return ResourceManager.GetString("MSG_FORA_DO_LIMITE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Consulta uma cadeia de caracteres localizada semelhante a Registro salvo com sucesso!.
         /// </summary>
         public static string MSG_SUCESSO {
