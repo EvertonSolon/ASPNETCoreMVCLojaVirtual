@@ -42,7 +42,8 @@ namespace LojaVirtual.Repositorios
 
         public IEnumerable<Produto> ObterTodos()
         {
-            return _contexto.Produtos;
+            var resultado = _contexto.Produtos.Include(x => x.Categoria).AsEnumerable();
+            return resultado;
         }
 
         public IPagedList<Produto> ObterTodos(int? pagina)
@@ -52,7 +53,7 @@ namespace LojaVirtual.Repositorios
 
         public IPagedList<Produto> ObterTodos(int? pagina, string pesquisa)
         {
-            var bancoProdutos = _contexto.Produtos.AsQueryable();
+            var bancoProdutos = _contexto.Produtos.Include(x => x.Categoria).AsQueryable();
 
             if (!string.IsNullOrEmpty(pesquisa))
             {

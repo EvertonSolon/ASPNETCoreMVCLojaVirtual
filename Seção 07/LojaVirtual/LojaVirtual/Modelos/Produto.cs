@@ -1,13 +1,18 @@
-﻿using LojaVirtual.Modelos.Bases;
+﻿using LojaVirtual.Bibliotecas.Lang;
+using LojaVirtual.Modelos.Bases;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace LojaVirtual.Modelos
 {
     public class Produto : Base
     {
+        [Required(ErrorMessageResourceType = typeof(Mensagem), ErrorMessageResourceName = "MSG_E001")]
+        [Display(Name = "Descrição")]
         public string Descricao { get; set; }
+
         public decimal Valor { get; set; }
         public int Quantidade { get; set; }
 
@@ -24,6 +29,7 @@ namespace LojaVirtual.Modelos
 
         //Banco de dados - Relacionamentos entre tabelas
         [ForeignKey("Categoria")]
+        [Display(Name = "Categoria")]
         public int CategoriaId { get; set; }
 
         //POO - Associações entre objetos

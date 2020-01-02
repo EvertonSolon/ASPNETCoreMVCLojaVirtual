@@ -45,4 +45,11 @@
     <Folder Include="Areas\Colaborador\Models\" />
   </ItemGroup>
 
+
+  <ItemGroup>
+    <Content Update="wwwroot\img\imagem-padrao.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
 </Project>

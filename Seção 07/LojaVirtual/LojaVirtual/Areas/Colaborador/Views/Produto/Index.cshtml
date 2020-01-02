@@ -1,0 +1,80 @@
+﻿
+@model IPagedList<Produto>
+@{
+    ViewData["Title"] = "Index";
+    var pesquisa = Context.Request.Query["pesquisa"];
+}
+
+<h1>Produto</h1>
+
+<br />
+<br />
+<form method="get">
+
+    <div class="form-group">
+        <label for="pesquisa"></label>
+        <input type="text" name="pesquisa" id="pesquisa" value="@pesquisa" class="form-control" placeholder="Digite o nome do produto">
+    </div>
+
+    <button type="submit" class="btn btn-primary">Pesquisar</button>
+
+</form>
+
+<br />
+<br />
+
+<a asp-action="Cadastrar" class="btn btn-primary">Cadastrar</a>
+<br />
+<br />
+@if (TempData["MSG_SUCESSO"] != null)
+{
+    <p class="alert alert-success">@TempData["MSG_SUCESSO"]</p>
+}
+else if (TempData["MSG_ERRO"] != null)
+{
+    <p class="alert alert-danger">@Html.Raw(@TempData["MSG_ERRO"])</p>
+}
+
+@if (Model.Any())
+{
+    <div class="table-responsive">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th scope="col">@Html.DisplayNameFor(x => x.First().Id)</th>
+                    <th scope="col">@Html.DisplayNameFor(x => x.First().Nome)</th>
+                    <th scope="col">@Html.DisplayNameFor(x => x.First().Categoria)</th>
+                    <th scope="col">@Html.DisplayNameFor(x => x.First().Valor)</th>
+                    <th scope="col">Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var produto in Model)
+                {
+                    <tr>
+
+                        <th scope="row">@produto.Id</th>
+                        <td>@produto.Nome</td>
+                        <td>@produto.Categoria.Nome</td>
+                        <td>@produto.Valor.ToString("C")</td>
+                        <td>
+                            <a asp-action="Atualizar" asp-route-id="@produto.Id" class="btn btn-secondary">Atualizar</a>
+                            <a asp-action="Excluir" asp-route-id="@produto.Id" class="btn btn-danger">Excluir</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    <!-- output a paging control that lets the user navigation to the previous page, next page, etc -->
+    @Html.PagedListPager((IPagedList)Model, pagina => Url.Action("Index", new { pagina = pagina, pesquisa = pesquisa }))
+}
+else
+{
+    <br /><br />
+    <p>
+        <span>Nenhum registro cadastrado!</span>
+    </p>
+
+}
