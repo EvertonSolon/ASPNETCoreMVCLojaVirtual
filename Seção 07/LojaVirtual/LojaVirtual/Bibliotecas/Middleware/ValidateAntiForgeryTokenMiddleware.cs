@@ -20,9 +20,14 @@ namespace LojaVirtual.Bibliotecas.Middleware
 
         public async Task Invoke(HttpContext context)
         {
-            if (HttpMethods.IsPost(context.Request.Method))
-                await _antiforgery.ValidateRequestAsync(context);
+            var cabecalho = context.Request.Headers["x-requested-with"];
+            var tipoAjax = cabecalho == "XMLHttpRequest";
+            //var existeArquivo = context.Request.Form.Files.Any();
 
+            if (HttpMethods.IsPost(context.Request.Method) && !(context.Request.Form.Files.Any() && tipoAjax))
+            {
+                await _antiforgery.ValidateRequestAsync(context);
+            }
             await _next(context);
         }
     }

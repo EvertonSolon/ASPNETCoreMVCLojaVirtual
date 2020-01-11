@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using LojaVirtual.Areas.Colaborador.Controllers.Base;
 using LojaVirtual.Bibliotecas.Filtro;
 using LojaVirtual.Bibliotecas.Lang;
 using LojaVirtual.Modelos;
@@ -12,16 +13,10 @@ using X.PagedList;
 
 namespace LojaVirtual.Areas.Colaborador.Controllers
 {
-    [Area("Colaborador")]
     [ColaboradorAutorizacao]
-    public class CategoriaController : Controller
+    public class CategoriaController : BaseController
     {
-        private readonly ICategoriaRepository _categoriaRepository;
-
-        public CategoriaController(ICategoriaRepository categoriaRepository)
-        {
-            _categoriaRepository = categoriaRepository;
-        }
+        public CategoriaController(ICategoriaRepository categoriaRepository) : base(categoriaRepository) { }
 
         public IActionResult Index(int? pagina)
         {
@@ -58,8 +53,7 @@ namespace LojaVirtual.Areas.Colaborador.Controllers
         {
             var categoria = _categoriaRepository.Obter(Id);
 
-            ViewBag.Categorias = _categoriaRepository.ObterTodos().Where(x => x.Id != Id).
-                Select(x => new SelectListItem(x.Nome, x.Id.ToString()));
+            ObterViewBagCategorias();
 
             return View(categoria);
         }

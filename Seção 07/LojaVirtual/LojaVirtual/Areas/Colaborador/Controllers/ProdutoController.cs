@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using LojaVirtual.Areas.Colaborador.Controllers.Base;
 using LojaVirtual.Bibliotecas.Lang;
 using LojaVirtual.Modelos;
 using LojaVirtual.Repositorios.Contracts;
@@ -10,16 +11,14 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace LojaVirtual.Areas.Colaborador.Controllers
 {
-    [Area("Colaborador")]
-    public class ProdutoController : Controller
+    public class ProdutoController : BaseController
     {
         private readonly IProdutoRepository _produtoRepository;
-        private readonly ICategoriaRepository _categoriaRepository;
 
-        public ProdutoController(IProdutoRepository produtoRepository, ICategoriaRepository categoriaRepository)
+        public ProdutoController(IProdutoRepository produtoRepository, ICategoriaRepository categoriaRepository) : 
+            base(categoriaRepository)
         {
             _produtoRepository = produtoRepository;
-            _categoriaRepository = categoriaRepository;
         }
 
         public IActionResult Index(int? pagina, string pesquisa)
@@ -32,22 +31,45 @@ namespace LojaVirtual.Areas.Colaborador.Controllers
         [HttpGet]
         public IActionResult Cadastrar()
         {
-            ViewBag.Categorias = _categoriaRepository.ObterTodos()
-                .Select(x => new SelectListItem(x.Nome, x.Id.ToString()));
+            ObterViewBagCategorias();
             return View();
         }
 
+        [HttpPost]
         public IActionResult Cadastrar([FromForm]Produto produto)
         {
             if (!ModelState.IsValid)
             {
-                ViewBag.Produtos = _produtoRepository.ObterTodos()
-                    .Select(x => new SelectListItem(x.Id.ToString(), 
-                                                    x.Nome));
+                ObterViewBagCategorias();
                 return View();
             }
 
             _produtoRepository.Cadastrar(produto);
+            TempData["MSG_SUCESSO"] = Mensagem.MSG_SUCESSO;
+
+            return RedirectToAction(nameof(Index));
+        }
+
+        [HttpGet]
+        public IActionResult Atualizar(int id)
+        {
+            var produto = _produtoRepository.Obter(id);
+            ObterViewBagCategorias();
+            
+            return View(produto);
+        }
+
+        [HttpPost]
+        public IActionResult Atualizar(Produto produto, int id)
+        {
+            if (!ModelState.IsValid)
+            {
+                ObterViewBagCategorias();
+                return View();
+            }
+
+            _produtoRepository.Atualizar(produto);
+
             TempData["MSG_SUCESSO"] = Mensagem.MSG_SUCESSO;
 
             return RedirectToAction(nameof(Index));
