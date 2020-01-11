@@ -8,7 +8,7 @@
     $('.dinheiro').mask('000.000.000.000.000,00', { reverse: true });
 
     AjaxUploadImagemProduto();
-})
+});
 
 function AjaxUploadImagemProduto() {
     $(".img-upload").click(function () {
@@ -23,6 +23,9 @@ function AjaxUploadImagemProduto() {
         //O "file" do parâmetro deve ser o mesmo nome do parâmetro do método no controller.
         formulario.append("file", binario);
 
+        var CampoHidden = $(this).parent().find("input[name=imagem]");
+        var Imagem = $(this).parent().find(".img-upload");
+
         //Requisição Ajax enviado ao Formulário
         $.ajax({
             type: "POST",
@@ -33,8 +36,11 @@ function AjaxUploadImagemProduto() {
             error: function () {
                 alert("Erro no envio do arquivo");
             },
-            sucsesso: function (data) {
-                alert("Arquivo enviado com sucesso!" + data.caminho);
+            success: function (data) {
+                //alert("Arquivo enviado com sucesso no caminho:" + data.caminho);
+                var caminho = data.caminho;
+                Imagem.attr("src", caminho);
+                CampoHidden.val(caminho);
             }
 
         });
