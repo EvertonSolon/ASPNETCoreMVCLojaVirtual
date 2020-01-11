@@ -14,6 +14,26 @@ function AjaxUploadImagemProduto() {
     $(".img-upload").click(function () {
         $(this).parent().find(".input-file").click();
     });
+    $(".btn-imagem-excluir").click(function () {
+        var CampoHidden = $(this).parent().find("input[name=imagem]");
+        var Imagem = $(this).parent().find(".img-upload");
+        var BtnExcluir = $(this).parent().find(".btn-imagem-excluir");
+        var InputFile = $(this).parent().find(".input-file");
+
+        $.ajax({
+            type: "GET",
+            url: "/Colaborador/Imagem/Excluir?caminho=" + CampoHidden.val(),
+            error: function () {
+                //alert("Erro no envio do arquivo");
+            },
+            success: function (data) {
+                Imagem.attr("src", "/img/imagem-padrao.png");
+                BtnExcluir.addClass("btn-ocultar");
+                CampoHidden.val("");
+                InputFile.val("");
+            }
+        });
+    });
 
     $(".input-file").change(function () {
         //Formulário de dados via Javascrip
@@ -25,6 +45,7 @@ function AjaxUploadImagemProduto() {
 
         var CampoHidden = $(this).parent().find("input[name=imagem]");
         var Imagem = $(this).parent().find(".img-upload");
+        var BtnExcluir = $(this).parent().find(".btn-imagem-excluir");
 
         //Requisição Ajax enviado ao Formulário
         $.ajax({
@@ -41,6 +62,7 @@ function AjaxUploadImagemProduto() {
                 var caminho = data.caminho;
                 Imagem.attr("src", caminho);
                 CampoHidden.val(caminho);
+                BtnExcluir.removeClass("btn-ocultar");
             }
 
         });
