@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using LojaVirtual.Areas.Colaborador.Controllers.Base;
+using LojaVirtual.Bibliotecas.Arquivo;
 using LojaVirtual.Bibliotecas.Lang;
 using LojaVirtual.Modelos;
 using LojaVirtual.Repositorios.Contracts;
@@ -45,6 +46,11 @@ namespace LojaVirtual.Areas.Colaborador.Controllers
             }
 
             _produtoRepository.Cadastrar(produto);
+
+            var listaCaminhosImagensTemporarias = Request.Form["imagem"].ToList();
+
+            var listaCaminhosDefinitivos = GerenciadorArquivo.MoverImagensProduto(listaCaminhosImagensTemporarias, produto.Id.ToString());
+
             TempData["MSG_SUCESSO"] = Mensagem.MSG_SUCESSO;
 
             return RedirectToAction(nameof(Index));
