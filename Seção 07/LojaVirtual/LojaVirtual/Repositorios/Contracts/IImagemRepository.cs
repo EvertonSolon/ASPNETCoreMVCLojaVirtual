@@ -7,8 +7,10 @@ using System.Threading.Tasks;
 
 namespace LojaVirtual.Repositorios.Contracts
 {
-    interface IImagemRepository : IBaseCrudRepository<Imagem>, IBasePagedList<Imagem>
+    public interface IImagemRepository : IBaseCrudRepository<Imagem>, IBasePagedList<Imagem>
     {
         void ExcluirImagensDoProduto(int ProdutoId);
+
+        void CadastrarImagens(List<Imagem> listaImagens);
     }
 }

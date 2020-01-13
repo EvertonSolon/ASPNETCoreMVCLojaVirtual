@@ -28,6 +28,15 @@ namespace LojaVirtual.Repositorios
             _contexto.SaveChanges();
         }
 
+        public void CadastrarImagens(List<Imagem> listaImagens)
+        {
+
+            foreach (var imagem in listaImagens)
+            {
+                Cadastrar(imagem);
+            }
+        }
+
         public void Excluir(int Id)
         {
             var objeto = Obter(Id);

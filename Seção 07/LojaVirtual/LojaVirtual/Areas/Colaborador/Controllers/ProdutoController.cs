@@ -1,25 +1,25 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Linq;
 using LojaVirtual.Areas.Colaborador.Controllers.Base;
 using LojaVirtual.Bibliotecas.Arquivo;
 using LojaVirtual.Bibliotecas.Lang;
 using LojaVirtual.Modelos;
 using LojaVirtual.Repositorios.Contracts;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace LojaVirtual.Areas.Colaborador.Controllers
 {
     public class ProdutoController : BaseController
     {
-        private readonly IProdutoRepository _produtoRepository;
+        protected readonly IImagemRepository _imagemRepositorio;
+        protected readonly IProdutoRepository _produtoRepository;
 
-        public ProdutoController(IProdutoRepository produtoRepository, ICategoriaRepository categoriaRepository) : 
-            base(categoriaRepository)
+        public ProdutoController(IProdutoRepository produtoRepositorio,
+            ICategoriaRepository categoriaRepositorio,
+            IImagemRepository imagemRepositorio) : base(categoriaRepositorio)
         {
-            _produtoRepository = produtoRepository;
+            _produtoRepository = produtoRepositorio;
+            _imagemRepositorio = imagemRepositorio;
+
         }
 
         public IActionResult Index(int? pagina, string pesquisa)
@@ -49,7 +49,9 @@ namespace LojaVirtual.Areas.Colaborador.Controllers
 
             var listaCaminhosImagensTemporarias = Request.Form["imagem"].ToList();
 
-            var listaCaminhosDefinitivos = GerenciadorArquivo.MoverImagensProduto(listaCaminhosImagensTemporarias, produto.Id.ToString());
+            var listaImagensCaminhosDefinitivos = GerenciadorArquivo.MoverImagensProduto(listaCaminhosImagensTemporarias, produto.Id);
+
+            _imagemRepositorio.CadastrarImagens(listaImagensCaminhosDefinitivos);
 
             TempData["MSG_SUCESSO"] = Mensagem.MSG_SUCESSO;
 

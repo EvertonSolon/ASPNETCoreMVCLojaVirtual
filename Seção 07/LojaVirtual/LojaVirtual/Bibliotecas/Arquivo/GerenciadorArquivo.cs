@@ -1,4 +1,5 @@
 ﻿using LojaVirtual.Bibliotecas.Bug;
+using LojaVirtual.Modelos;
 using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
@@ -35,15 +36,15 @@ namespace LojaVirtual.Bibliotecas.Arquivo
             return existe;
         }
 
-        internal static List<string> MoverImagensProduto(List<string> listaCaminhosImagensTemporarias, string produtoId)
+        internal static List<Imagem> MoverImagensProduto(List<string> listaCaminhosImagensTemporarias, int produtoId)
         {
-            var caminhoDefinitivoPastaProduto = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/uploads", produtoId);
+            var caminhoDefinitivoPastaProduto = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/uploads", produtoId.ToString());
             var directorioExiste = Directory.Exists(caminhoDefinitivoPastaProduto);
 
             if (!directorioExiste)
                 Directory.CreateDirectory(caminhoDefinitivoPastaProduto);
 
-            var listaCaminhosDefinitivos = new List<string>();
+            var listaCaminhosDefinitivos = new List<Imagem>();
 
             foreach (var caminhoImagemTemporaria in listaCaminhosImagensTemporarias)
             {
@@ -55,7 +56,7 @@ namespace LojaVirtual.Bibliotecas.Arquivo
                         "wwwroot", caminhoImagemTemporaria);
 
                     var caminhoAbsolutoDefinitio = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/uploads",
-                        produtoId, nomeArquivo);
+                        produtoId.ToString(), nomeArquivo);
 
                     if (File.Exists(caminhoAbsolutoImagemTemporaria))
                     {
@@ -65,7 +66,13 @@ namespace LojaVirtual.Bibliotecas.Arquivo
                             File.Delete(caminhoAbsolutoImagemTemporaria);
                     }
 
-                    listaCaminhosDefinitivos.Add(Path.Combine("/uploads", produtoId, nomeArquivo).Replace("\\", "/"));
+                    listaCaminhosDefinitivos.Add(
+                        new Imagem
+                        {
+                            Caminho = Path.Combine("/uploads", produtoId.ToString(), nomeArquivo).Replace("\\", "/"),
+                            ProdutoId = produtoId
+                        }
+                        );
                 }
             }
             return listaCaminhosDefinitivos;
