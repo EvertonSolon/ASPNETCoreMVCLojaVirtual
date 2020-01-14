@@ -13,7 +13,6 @@ namespace LojaVirtual.Bibliotecas.Arquivo
     {
         public static string CadastrarImagemProduto(IFormFile file)
         {
-            CurrentDirectoryHelpers.SetCurrentDirectory();
             var nomeArquivo = Path.GetFileName(file.FileName);
             var caminho = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/uploads/temp", nomeArquivo);
 
@@ -46,34 +45,31 @@ namespace LojaVirtual.Bibliotecas.Arquivo
 
             var listaCaminhosDefinitivos = new List<Imagem>();
 
-            foreach (var caminhoImagemTemporaria in listaCaminhosImagensTemporarias)
+            foreach (var caminhoImagemTemporaria in listaCaminhosImagensTemporarias.FindAll(x => x.Any()))
             {
-                if(string.IsNullOrEmpty(caminhoImagemTemporaria))
+                var nomeArquivo = Path.GetFileName(caminhoImagemTemporaria);
+
+                var caminhoAbsolutoImagemTemporaria = Path.Combine(Directory.GetCurrentDirectory(),
+                    "wwwroot/uploads/temp", nomeArquivo).Replace("/", "\\");
+
+                var caminhoAbsolutoDefinitio = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/uploads",
+                    produtoId.ToString(), nomeArquivo).Replace("/", "\\");
+
+                if (File.Exists(caminhoAbsolutoImagemTemporaria))
                 {
-                    var nomeArquivo = Path.GetFileName(caminhoImagemTemporaria);
+                    File.Copy(caminhoAbsolutoImagemTemporaria, caminhoAbsolutoDefinitio);
 
-                    var caminhoAbsolutoImagemTemporaria = Path.Combine(Directory.GetCurrentDirectory(),
-                        "wwwroot", caminhoImagemTemporaria);
-
-                    var caminhoAbsolutoDefinitio = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/uploads",
-                        produtoId.ToString(), nomeArquivo);
-
-                    if (File.Exists(caminhoAbsolutoImagemTemporaria))
-                    {
-                        File.Copy(caminhoAbsolutoImagemTemporaria, caminhoAbsolutoDefinitio);
-
-                        if (File.Exists(caminhoAbsolutoDefinitio))
-                            File.Delete(caminhoAbsolutoImagemTemporaria);
-                    }
-
-                    listaCaminhosDefinitivos.Add(
-                        new Imagem
-                        {
-                            Caminho = Path.Combine("/uploads", produtoId.ToString(), nomeArquivo).Replace("\\", "/"),
-                            ProdutoId = produtoId
-                        }
-                        );
+                    if (File.Exists(caminhoAbsolutoDefinitio))
+                        File.Delete(caminhoAbsolutoImagemTemporaria);
                 }
+
+                listaCaminhosDefinitivos.Add(
+                    new Imagem
+                    {
+                        Caminho = caminhoAbsolutoDefinitio.Replace("\\", "/"),
+                        ProdutoId = produtoId
+                    }
+                    );
             }
             return listaCaminhosDefinitivos;
         }
