@@ -50,10 +50,10 @@ namespace LojaVirtual.Bibliotecas.Arquivo
                 var nomeArquivo = Path.GetFileName(caminhoImagemTemporaria);
 
                 var caminhoAbsolutoImagemTemporaria = Path.Combine(Directory.GetCurrentDirectory(),
-                    "wwwroot/uploads/temp", nomeArquivo).Replace("/", "\\");
+                    "wwwroot/uploads/temp", nomeArquivo);
 
                 var caminhoAbsolutoDefinitio = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/uploads",
-                    produtoId.ToString(), nomeArquivo).Replace("/", "\\");
+                    produtoId.ToString(), nomeArquivo);
 
                 if (File.Exists(caminhoAbsolutoImagemTemporaria))
                 {
