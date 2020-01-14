@@ -66,7 +66,7 @@ namespace LojaVirtual.Bibliotecas.Arquivo
                 listaCaminhosDefinitivos.Add(
                     new Imagem
                     {
-                        Caminho = caminhoAbsolutoDefinitio.Replace("\\", "/"),
+                        Caminho = Path.Combine("/uploads", produtoId.ToString(), nomeArquivo).Replace("\\", "/"),
                         ProdutoId = produtoId
                     }
                     );
