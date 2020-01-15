@@ -1,4 +1,6 @@
-﻿using System.Linq;
+﻿using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 using LojaVirtual.Areas.Colaborador.Controllers.Base;
 using LojaVirtual.Bibliotecas.Arquivo;
 using LojaVirtual.Bibliotecas.Lang;
@@ -41,8 +43,12 @@ namespace LojaVirtual.Areas.Colaborador.Controllers
         {
             if (!ModelState.IsValid)
             {
+                produto.Imagens = new List<string>(Request.Form["imagem"])
+                    .Where(x => x.Length > 0)
+                    .Select(x => new Imagem { Caminho = x }).ToList();
+
                 ObterViewBagCategorias();
-                return View();
+                return View(produto);
             }
 
             _produtoRepository.Cadastrar(produto);
@@ -63,7 +69,7 @@ namespace LojaVirtual.Areas.Colaborador.Controllers
         {
             var produto = _produtoRepository.Obter(id);
             ObterViewBagCategorias();
-            
+
             return View(produto);
         }
 
