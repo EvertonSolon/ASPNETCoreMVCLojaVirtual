@@ -34,6 +34,7 @@ namespace LojaVirtual.Areas.Colaborador.Controllers
         [HttpGet]
         public IActionResult Cadastrar()
         {
+            GerenciadorArquivo.ApagarTodasImagensTemporarias();
             ObterViewBagCategorias();
             return View();
         }
@@ -51,13 +52,13 @@ namespace LojaVirtual.Areas.Colaborador.Controllers
                 return View(produto);
             }
 
-            _produtoRepository.Cadastrar(produto);
+            //_produtoRepository.Cadastrar(produto);
 
             var listaCaminhosImagensTemporarias = Request.Form["imagem"].ToList();
+            //var listaImagensCaminhosDefinitivos = GerenciadorArquivo.MoverImagensProduto(listaCaminhosImagensTemporarias, produto.Id);
+            var listaImagensCaminhosDefinitivos = GerenciadorArquivo.MoverImagensProduto(listaCaminhosImagensTemporarias, 66);
 
-            var listaImagensCaminhosDefinitivos = GerenciadorArquivo.MoverImagensProduto(listaCaminhosImagensTemporarias, produto.Id);
-
-            _imagemRepositorio.CadastrarImagens(listaImagensCaminhosDefinitivos);
+            //_imagemRepositorio.CadastrarImagens(listaImagensCaminhosDefinitivos);
 
             TempData["MSG_SUCESSO"] = Mensagem.MSG_SUCESSO;
 

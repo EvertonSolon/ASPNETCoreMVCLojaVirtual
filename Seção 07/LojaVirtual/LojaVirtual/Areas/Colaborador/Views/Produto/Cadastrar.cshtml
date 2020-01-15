@@ -121,7 +121,7 @@
 
         @for (int i = 0; i < 12; i++)
         {
-            var possuiImagem = imagens.ElementAtOrDefault(i) != null;
+            var possuiImagem = imagens?.ElementAtOrDefault(i) != null;
 
             @if (possuiImagem)
             {

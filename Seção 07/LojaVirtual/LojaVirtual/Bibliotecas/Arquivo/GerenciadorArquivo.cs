@@ -35,6 +35,17 @@ namespace LojaVirtual.Bibliotecas.Arquivo
             return existe;
         }
 
+        public static void ApagarTodasImagensTemporarias()
+        {
+            var caminhoPastaTemp = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/uploads/temp");
+            var pastaTemp = new DirectoryInfo(caminhoPastaTemp);
+
+            foreach (var arquivo in pastaTemp.GetFiles())
+            {
+                arquivo.Delete();
+            }
+        }
+
         internal static List<Imagem> MoverImagensProduto(List<string> listaCaminhosImagensTemporarias, int produtoId)
         {
             var caminhoDefinitivoPastaProduto = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/uploads", produtoId.ToString());
