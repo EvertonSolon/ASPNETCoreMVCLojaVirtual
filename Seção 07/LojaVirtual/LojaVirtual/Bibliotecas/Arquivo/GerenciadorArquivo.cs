@@ -55,16 +55,34 @@ namespace LojaVirtual.Bibliotecas.Arquivo
                 Directory.CreateDirectory(caminhoDefinitivoPastaProduto);
 
             var listaCaminhosDefinitivos = new List<Imagem>();
+            
 
-            foreach (var caminhoImagemTemporaria in listaCaminhosImagensTemporarias.FindAll(x => x.Any()))
+            foreach (var pastaUploadsImagemTemporaria in listaCaminhosImagensTemporarias.FindAll(x => x.Any()))
             {
-                var nomeArquivo = Path.GetFileName(caminhoImagemTemporaria);
+                var nomeArquivo = Path.GetFileName(pastaUploadsImagemTemporaria);
+                var pastaUploadsImagemDefinitiva = Path.Combine("/uploads", produtoId.ToString(), nomeArquivo).Replace("\\", "/");
 
                 var caminhoAbsolutoImagemTemporaria = Path.Combine(Directory.GetCurrentDirectory(),
                     "wwwroot/uploads/temp", nomeArquivo);
 
                 var caminhoAbsolutoDefinitio = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/uploads",
                     produtoId.ToString(), nomeArquivo);
+
+                if (pastaUploadsImagemDefinitiva == pastaUploadsImagemTemporaria)
+                {
+                    listaCaminhosDefinitivos.Add(
+                    new Imagem
+                    {
+                        Caminho = Path.Combine("/uploads", produtoId.ToString(), nomeArquivo).Replace("\\", "/"),
+                        ProdutoId = produtoId
+                    }
+                    );
+
+                    continue;
+                }
+
+                if (File.Exists(caminhoAbsolutoDefinitio))
+                    File.Delete(caminhoAbsolutoDefinitio);
 
                 if (File.Exists(caminhoAbsolutoImagemTemporaria))
                 {

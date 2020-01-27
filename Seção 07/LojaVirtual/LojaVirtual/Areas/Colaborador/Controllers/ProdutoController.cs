@@ -52,13 +52,12 @@ namespace LojaVirtual.Areas.Colaborador.Controllers
                 return View(produto);
             }
 
-            //_produtoRepository.Cadastrar(produto);
+            _produtoRepository.Cadastrar(produto);
 
             var listaCaminhosImagensTemporarias = Request.Form["imagem"].ToList();
-            //var listaImagensCaminhosDefinitivos = GerenciadorArquivo.MoverImagensProduto(listaCaminhosImagensTemporarias, produto.Id);
-            var listaImagensCaminhosDefinitivos = GerenciadorArquivo.MoverImagensProduto(listaCaminhosImagensTemporarias, 66);
+            var listaImagensCaminhosDefinitivos = GerenciadorArquivo.MoverImagensProduto(listaCaminhosImagensTemporarias, produto.Id);
 
-            //_imagemRepositorio.CadastrarImagens(listaImagensCaminhosDefinitivos);
+            _imagemRepositorio.CadastrarImagens(listaImagensCaminhosDefinitivos);
 
             TempData["MSG_SUCESSO"] = Mensagem.MSG_SUCESSO;
 
@@ -79,11 +78,22 @@ namespace LojaVirtual.Areas.Colaborador.Controllers
         {
             if (!ModelState.IsValid)
             {
+                produto.Imagens = new List<string>(Request.Form["imagem"])
+                    .Where(x => x.Length > 0)
+                    .Select(x => new Imagem { Caminho = x }).ToList();
+
                 ObterViewBagCategorias();
-                return View();
+                return View(produto);
             }
 
             _produtoRepository.Atualizar(produto);
+
+            var listaCaminhosImagensTemporarias = Request.Form["imagem"].ToList();
+            var listaImagensCaminhosDefinitivos = GerenciadorArquivo.MoverImagensProduto(listaCaminhosImagensTemporarias, produto.Id);
+
+            _imagemRepositorio.ExcluirImagensDoProduto(produto.Id);
+
+            _imagemRepositorio.CadastrarImagens(listaImagensCaminhosDefinitivos);
 
             TempData["MSG_SUCESSO"] = Mensagem.MSG_SUCESSO;
 
