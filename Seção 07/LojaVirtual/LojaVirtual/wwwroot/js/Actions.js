@@ -12,13 +12,13 @@
 
 function AjaxUploadImagemProduto() {
     $(".img-upload").click(function () {
-        $(this).parent().find(".input-file").click();
+        $(this).parent().parent().find(".input-file").click();
     });
     $(".btn-imagem-excluir").click(function () {
         var CampoHidden = $(this).parent().find("input[name=imagem]");
         var Imagem = $(this).parent().find(".img-upload");
         var BtnExcluir = $(this).parent().find(".btn-imagem-excluir");
-        var InputFile = $(this).parent().find(".input-file");
+        var InputFile = $(this).parent().parent().find(".input-file");
 
         $.ajax({
             type: "GET",
