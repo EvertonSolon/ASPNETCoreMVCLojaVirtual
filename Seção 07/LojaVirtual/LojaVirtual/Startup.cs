@@ -112,7 +112,9 @@ namespace LojaVirtual
 
             #endregion
 
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            services.AddMvc(options => {
+                options.ModelBindingMessageProvider.SetValueMustNotBeNullAccessor(x => "Campo de preenchimento obrigatório!");
+            }).SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
             //TODO: REFATORAR
             //var connection = "Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=LojaVirtual;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
