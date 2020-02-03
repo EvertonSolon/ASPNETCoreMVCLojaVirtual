@@ -13,6 +13,7 @@ using X.PagedList;
 
 namespace LojaVirtual.Areas.Colaborador.Controllers
 {
+    [Area("Colaborador")]
     [ColaboradorAutorizacao]
     public class CategoriaController : BaseController
     {

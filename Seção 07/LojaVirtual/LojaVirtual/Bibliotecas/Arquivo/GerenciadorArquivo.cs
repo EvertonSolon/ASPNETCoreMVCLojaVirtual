@@ -102,5 +102,18 @@ namespace LojaVirtual.Bibliotecas.Arquivo
             }
             return listaCaminhosDefinitivos;
         }
+
+        internal static void ExcluirImagensProduto(List<Imagem> imagensList)
+        {
+            foreach (var imagem in imagensList)
+            {
+                ExcluirImagemProduto(imagem.Caminho);
+            }
+
+            var pastaProduto = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/uploads", imagensList[0].ProdutoId.ToString());
+
+            if (Directory.Exists(pastaProduto))
+                Directory.Delete(pastaProduto);
+        }
     }
 }

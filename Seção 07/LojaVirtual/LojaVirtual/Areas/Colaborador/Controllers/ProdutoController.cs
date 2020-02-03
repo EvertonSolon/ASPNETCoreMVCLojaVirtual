@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using LojaVirtual.Areas.Colaborador.Controllers.Base;
 using LojaVirtual.Bibliotecas.Arquivo;
+using LojaVirtual.Bibliotecas.Filtro;
 using LojaVirtual.Bibliotecas.Lang;
 using LojaVirtual.Modelos;
 using LojaVirtual.Repositorios.Contracts;
@@ -10,6 +11,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace LojaVirtual.Areas.Colaborador.Controllers
 {
+    [Area("Colaborador")]
+    [ColaboradorAutorizacao]
     public class ProdutoController : BaseController
     {
         protected readonly IImagemRepository _imagemRepositorio;
@@ -96,6 +99,23 @@ namespace LojaVirtual.Areas.Colaborador.Controllers
             _imagemRepositorio.CadastrarImagens(listaImagensCaminhosDefinitivos);
 
             TempData["MSG_SUCESSO"] = Mensagem.MSG_SUCESSO;
+
+            return RedirectToAction(nameof(Index));
+        }
+
+        [HttpGet]
+        [ValidateHttpReferer]
+        public IActionResult Excluir(int id)
+        {
+            var produto = _produtoRepository.Obter(id);
+
+            GerenciadorArquivo.ExcluirImagensProduto(produto.Imagens.ToList());
+
+            _imagemRepositorio.ExcluirImagensDoProduto(id);
+
+            _produtoRepository.Excluir(id);
+
+            TempData["MSG_SUCESSO"] = Mensagem.MSG_SUCESSO_EXCLUSAO;
 
             return RedirectToAction(nameof(Index));
         }
