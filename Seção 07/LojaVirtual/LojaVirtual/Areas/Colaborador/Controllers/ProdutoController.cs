@@ -12,7 +12,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace LojaVirtual.Areas.Colaborador.Controllers
 {
     [Area("Colaborador")]
-    //[ColaboradorAutorizacao]
+    [ColaboradorAutorizacao]
     public class ProdutoController : BaseController
     {
         protected readonly IImagemRepository _imagemRepositorio;
