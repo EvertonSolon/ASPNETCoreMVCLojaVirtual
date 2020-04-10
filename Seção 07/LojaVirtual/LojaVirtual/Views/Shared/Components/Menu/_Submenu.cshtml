@@ -1,12 +1,21 @@
-﻿<ul class="dropdown-menu">
-    <li class="dropdown-item"><a href="#">4th level</a></li>
-    <li class="dropdown-item"><a href="#">4th level</a></li>
+﻿@{
+    var todasCategorias = (List<Categoria>)ViewData["todasCategorias"];
+    var categoria = (Categoria)ViewData["categoria"];
+var categoriasFilhas = todasCategorias.Where(x => x.CategoriaPaiId == categoria.Id).ToList();
+}
+@if (categoriasFilhas.Any())
+{
     <li class="dropdown-submenu">
-        <a class="dropdown-item" href="#">another level</a>
+        <a class="dropdown-item" tabindex="-1" href="#">@categoria.Nome</a>
         <ul class="dropdown-menu">
-            <li class="dropdown-item"><a href="#">5th level</a></li>
-            <li class="dropdown-item"><a href="#">5th level</a></li>
-            <li class="dropdown-item"><a href="#">5th level</a></li>
+            @foreach (var categoriaFilha in categoriasFilhas)
+            {
+                <li class="dropdown-item"><a href="#">@categoriaFilha.Nome</a></li>
+            }
         </ul>
     </li>
-</ul>
+}
+else
+{
+    <li class="dropdown-item"><a href="#">@categoria.Nome</a></li>
+}
