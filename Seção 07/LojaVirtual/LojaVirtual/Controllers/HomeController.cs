@@ -59,6 +59,11 @@ namespace LojaVirtual.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        public IActionResult Categoria()
+        {
+            return View();
+        }
+
         public IActionResult Contato()
         {
             return View();
