@@ -10,7 +10,19 @@ var categoriasFilhas = todasCategorias.Where(x => x.CategoriaPaiId == categoria.
         <ul class="dropdown-menu">
             @foreach (var categoriaFilha in categoriasFilhas)
             {
-                <li class="dropdown-item"><a href="#">@categoriaFilha.Nome</a></li>
+                @if (todasCategorias.Where(x => x.CategoriaPaiId == categoriaFilha.Id).Count() > 0)
+                {
+                    ViewData.Remove("categoria");
+
+                    //Chamada do submenu (Recursividade)
+                    @await Html.PartialAsync("~/Views/Shared/Components/Menu/_Submenu.cshtml",
+                      new ViewDataDictionary(ViewData) { { "categoria", categoriaFilha } })
+                }
+                else
+                {
+                    <li class="dropdown-item"><a href="#">@categoriaFilha.Nome</a></li>
+                }
+
             }
         </ul>
     </li>
