@@ -12,6 +12,7 @@ using LojaVirtual.Repositorios.Contracts;
 using Microsoft.AspNetCore.Http;
 using LojaVirtual.Bibliotecas.Login;
 using LojaVirtual.Bibliotecas.Filtro;
+using LojaVirtual.Modelos.ViewModels;
 //using Microsoft.AspNetCore.Http;
 
 namespace LojaVirtual.Controllers
@@ -21,33 +22,45 @@ namespace LojaVirtual.Controllers
         //private readonly LojaVirtualContext _contexto;
         private readonly IClienteRepository _clienteRepository;
         private readonly INewsLetterRepository _newsLetterRepository;
+        private readonly IProdutoRepository _produtoRepository;
         private readonly LoginCliente _loginCliente;
         private readonly GerenciarEmail _gerenciarEmail;
 
         public HomeController(IClienteRepository clienteRepository, 
             INewsLetterRepository newsLetterRepository,
+            IProdutoRepository produtoRepository,
             LoginCliente loginCliente,
             GerenciarEmail gerenciarEmail)
         {
             _clienteRepository = clienteRepository;
             _newsLetterRepository = newsLetterRepository;
+            _produtoRepository = produtoRepository;
             _loginCliente = loginCliente;
             _gerenciarEmail = gerenciarEmail;
         }
 
         [HttpGet]
-        public IActionResult Index()
+        public IActionResult Index(int? pagina, string pesquisa)
         {
-            return View();
+            IndexViewModel viewModel = ObterTodosProdutos(pagina, pesquisa);
+            return View(viewModel);
+        }
+
+        private IndexViewModel ObterTodosProdutos(int? pagina, string pesquisa)
+        {
+            return new IndexViewModel { lista = _produtoRepository.ObterTodos(pagina, pesquisa) };
         }
 
         [HttpPost]
-        public IActionResult Index([FromForm]NewsLetterEmail newsLetter)
+        public IActionResult Index(int? pagina, string pesquisa, [FromForm]NewsLetterEmail newsLetter)
         {
 
             //Validação do formulário
             if (!ModelState.IsValid)
-                return View();
+            {
+                IndexViewModel viewModel = ObterTodosProdutos(pagina, pesquisa);
+                return View(viewModel);
+            }
 
             //Adição no banco de dados
             //_repository.NewsLetterEmails.Add(newsLetter);

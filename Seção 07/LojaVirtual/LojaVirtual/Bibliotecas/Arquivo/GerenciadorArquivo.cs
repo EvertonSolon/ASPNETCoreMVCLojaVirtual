@@ -38,12 +38,21 @@ namespace LojaVirtual.Bibliotecas.Arquivo
         public static void ApagarTodasImagensTemporarias()
         {
             var caminhoPastaTemp = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/uploads/temp");
+
+            ValidarPastaTemp(caminhoPastaTemp);
+
             var pastaTemp = new DirectoryInfo(caminhoPastaTemp);
 
             foreach (var arquivo in pastaTemp.GetFiles())
             {
                 arquivo.Delete();
             }
+        }
+
+        private static void ValidarPastaTemp(string caminhoPastaTemp)
+        {
+            if (!Directory.Exists(caminhoPastaTemp))
+                Directory.CreateDirectory(caminhoPastaTemp);
         }
 
         internal static List<Imagem> MoverImagensProduto(List<string> listaCaminhosImagensTemporarias, int produtoId)
