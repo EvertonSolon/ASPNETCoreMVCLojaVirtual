@@ -48,7 +48,7 @@ namespace LojaVirtual.Controllers
 
         private IndexViewModel ObterTodosProdutos(int? pagina, string pesquisa)
         {
-            return new IndexViewModel { lista = _produtoRepository.ObterTodos(pagina, pesquisa) };
+            return new IndexViewModel { Lista = _produtoRepository.ObterTodos(pagina, pesquisa) };
         }
 
         [HttpPost]

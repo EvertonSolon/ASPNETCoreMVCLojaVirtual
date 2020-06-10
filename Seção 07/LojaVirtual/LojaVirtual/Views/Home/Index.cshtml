@@ -2,6 +2,7 @@
 
 @{
     ViewData["Title"] = "Index";
+    var pesquisa = Context.Request.Query["pesquisa"];
 }
 
 @*<h1>Home -> Index (dentro do arquivo Index da Home)</h1>*@
@@ -76,11 +77,17 @@
     <!-- Wrap the rest of the page in another container to center all the content. -->
 
 
-    @if (Model.lista.Any())
+    @if (Model.Lista.Any())
     {
         <div class="container" id="code_prod_complex">
             <div class="row">
-                @foreach (var produto in Model.lista)
+                <div class="offset-md-10 col-md-2">
+                    <!--Ordem alfabética, menor e maior preços-->
+                    <select id="ordenacao" asp-items="Model.OrdenacaoLista"></select>
+                </div>
+            </div>
+            <div class="row">
+                @foreach (var produto in Model.Lista)
                 {
                     <div class="col-md-3">
                         <figure class="card card-product">
@@ -117,7 +124,7 @@
 
             </div> <!-- row.// -->
             <!-- output a paging control that lets the user navigation to the previous page, next page, etc -->
-            @Html.PagedListPager((IPagedList)Model.lista, pagina => Url.Action("Index", new { pagina }))
+            @Html.PagedListPager((IPagedList)Model.Lista, pagina => Url.Action("Index", new { pagina = pagina, pesquisa = pesquisa}))
         </div>
     }
 </main>
@@ -154,7 +161,7 @@ new { @action = @Url.Action("Index", "Home") + "#formulario" }))
                             <span class="input-group-text"><i class="fa fa-envelope"></i></span>
                         </div>
 
-                        @Html.EditorFor(m => m.newsLetter.Email, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.EditorFor(m => m.NewsLetter.Email, new { htmlAttributes = new { @class = "form-control" } })
 
                     </div>
 
@@ -165,7 +172,7 @@ new { @action = @Url.Action("Index", "Home") + "#formulario" }))
 
             </div>
             <div class="row justify-content-center">
-                <span style="color: red;">@Html.ValidationMessageFor(m => m.newsLetter.Email) </span>
+                <span style="color: red;">@Html.ValidationMessageFor(m => m.NewsLetter.Email) </span>
             </div>
         </div>
         @*</form>*@
