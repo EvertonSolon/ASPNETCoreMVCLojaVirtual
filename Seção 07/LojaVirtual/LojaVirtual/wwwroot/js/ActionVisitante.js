@@ -1,6 +1,18 @@
 ﻿$(document).ready(function () {
+    MoverScrollOrdenacao();
     MudarOrdenacao();
 });
+
+function MoverScrollOrdenacao() {
+    var hash = window.location.hash;
+
+    //Verifica se existe o fragmento (#) na url da página
+    var existeHash = hash != null && hash.length > 0 && hash == "#posicao-produto"
+
+    if (existeHash) {
+        window.scrollBy(0, 515);
+    }
+}
 
 function MudarOrdenacao() {
     $('#ordenacao').change(function () {
@@ -23,7 +35,7 @@ function MudarOrdenacao() {
         //alert("window.location.pathname = " + window.location.pathname);
 
         var url = window.location.protocol + "//" + window.location.host + window.location.pathname;
-        var urlComParametros = url + "?pagina" + pagina + "&pesquisa=" + pesquisa + "&ordenacao=" + ordenacao + "#myCarousel";
+        var urlComParametros = url + "?pagina" + pagina + "&pesquisa=" + pesquisa + "&ordenacao=" + ordenacao + "#posicao-produto";
         //alert(urlComParametros);
         //URL - /Home/Index?pagina=&pesquisa=&ordenacao=
         window.location.href = urlComParametros;
