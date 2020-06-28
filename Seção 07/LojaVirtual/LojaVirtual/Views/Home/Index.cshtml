@@ -3,6 +3,7 @@
 @{
     ViewData["Title"] = "Index";
     var pesquisa = Context.Request.Query["pesquisa"];
+    var ordenacao = Context.Request.Query["ordenacao"].ToString();
 }
 
 @*<h1>Home -> Index (dentro do arquivo Index da Home)</h1>*@
@@ -83,7 +84,7 @@
             <div class="row">
                 <div class="offset-md-10 col-md-2">
                     <!--Ordem alfabética, menor e maior preços-->
-                    <select id="ordenacao" asp-items="Model.OrdenacaoLista"></select>
+                    <select id="ordenacao" asp-for="@ordenacao" class="form-control" asp-items="Model.OrdenacaoLista"></select>
                 </div>
             </div>
             <div class="row">
@@ -124,7 +125,7 @@
 
             </div> <!-- row.// -->
             <!-- output a paging control that lets the user navigation to the previous page, next page, etc -->
-            @Html.PagedListPager((IPagedList)Model.Lista, pagina => Url.Action("Index", new { pagina = pagina, pesquisa = pesquisa}))
+            @Html.PagedListPager((IPagedList)Model.Lista, pagina => Url.Action("Index", new { pagina = pagina, pesquisa = pesquisa, ordenacao = ordenacao}))
         </div>
     }
 </main>

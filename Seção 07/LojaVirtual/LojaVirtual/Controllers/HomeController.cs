@@ -40,25 +40,25 @@ namespace LojaVirtual.Controllers
         }
 
         [HttpGet]
-        public IActionResult Index(int? pagina, string pesquisa)
+        public IActionResult Index(int? pagina, string pesquisa, string ordenacao = "A")
         {
-            IndexViewModel viewModel = ObterTodosProdutos(pagina, pesquisa);
+            IndexViewModel viewModel = ObterTodosProdutos(pagina, pesquisa, ordenacao);
             return View(viewModel);
         }
 
-        private IndexViewModel ObterTodosProdutos(int? pagina, string pesquisa)
+        private IndexViewModel ObterTodosProdutos(int? pagina, string pesquisa, string ordenacao)
         {
-            return new IndexViewModel { Lista = _produtoRepository.ObterTodos(pagina, pesquisa) };
+            return new IndexViewModel { Lista = _produtoRepository.ObterTodos(pagina, pesquisa, ordenacao) };
         }
 
         [HttpPost]
-        public IActionResult Index(int? pagina, string pesquisa, [FromForm]NewsLetterEmail newsLetter)
+        public IActionResult Index(int? pagina, string pesquisa, string ordenacao, [FromForm]NewsLetterEmail newsLetter)
         {
 
             //Validação do formulário
             if (!ModelState.IsValid)
             {
-                IndexViewModel viewModel = ObterTodosProdutos(pagina, pesquisa);
+                IndexViewModel viewModel = ObterTodosProdutos(pagina, pesquisa, ordenacao);
                 return View(viewModel);
             }
 

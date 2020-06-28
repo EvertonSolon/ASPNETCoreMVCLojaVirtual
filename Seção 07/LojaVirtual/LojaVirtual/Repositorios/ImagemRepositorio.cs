@@ -78,5 +78,10 @@ namespace LojaVirtual.Repositorios
         {
             throw new NotImplementedException();
         }
+
+        public IPagedList<Imagem> ObterTodos(int? pagina, string pesquisa, string ordenacao)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

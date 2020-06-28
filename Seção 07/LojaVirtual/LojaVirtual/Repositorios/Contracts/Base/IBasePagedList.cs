@@ -1,9 +1,4 @@
-﻿using LojaVirtual.Modelos;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using X.PagedList;
+﻿using X.PagedList;
 
 namespace LojaVirtual.Repositorios.Contracts.Base
 {
@@ -11,5 +6,6 @@ namespace LojaVirtual.Repositorios.Contracts.Base
     {
         IPagedList<T> ObterTodos(int? pagina);
         IPagedList<T> ObterTodos(int? pagina, string pesquisa);
+        IPagedList<T> ObterTodos(int? pagina, string pesquisa, string ordenacao);
     }
 }

@@ -77,5 +77,10 @@ namespace LojaVirtual.Repositorios
         {
             return _contexto.Clientes.ToPagedList(pagina ?? 1, _RegistrosPorPagina);
         }
+
+        public IPagedList<Cliente> ObterTodos(int? pagina, string pesquisa, string ordenacao)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
